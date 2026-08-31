@@ -1,0 +1,15 @@
+[2026-08-28 03:47:12,104] {taskinstance.py:1165} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/market_data_pipeline.py", line 201, in check_data_quality
+    assert null_rate < threshold, f"Null rate {null_rate:.3f} exceeds threshold {threshold}"
+AssertionError: Null rate 0.038 exceeds threshold 0.025 for field customer_id
+[2026-08-28 03:47:12,105] {taskinstance.py:1166} ERROR - Data quality check FAILED
+[2026-08-28 03:47:12,106] {taskinstance.py:1167} ERROR - Field: customer_id
+[2026-08-28 03:47:12,107] {taskinstance.py:1168} ERROR - Null rate observed: 3.8%
+[2026-08-28 03:47:12,109] {taskinstance.py:1169} ERROR - Null rate threshold: 2.5%
+[2026-08-28 03:47:12,110] {taskinstance.py:1170} ERROR - Records checked: 1847, null count: 70
+[2026-08-28 03:47:12,111] {local_task_job.py:102} ERROR - Task exited with return code 1
+Affected stage: quality_check
+DAG: market_data_ingest_v2
+Task: check_null_rates
+Run ID: scheduled__2026-08-28T03:30:00+00:00

@@ -1,0 +1,1 @@
+{"agent": "example_agent", "timestamp": "2026-08-28T06:00:00Z", "inputs_reviewed": ["data/sample_input.csv"], "decision": "Example decision text -- replace this record with your own lab entries", "confidence": "High", "human_review_triggered": false, "model_used": "Example model -- fill in from mode selector"}

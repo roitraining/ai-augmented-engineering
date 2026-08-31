@@ -1,0 +1,22 @@
+---
+description: DE team coding standards for Python pipeline development
+alwaysApply: true
+---
+
+All Python function arguments must have type hints.
+All return types must be declared. Use the typing module for complex types.
+
+Every pipeline function must log on entry and exit using the project logger.
+Format: logger.info(f'Starting {function_name} with {len(records)} records')
+
+Use pathlib.Path for all file operations.
+Never use os.path or raw string paths passed directly to open().
+
+Handle None explicitly on all critical fields.
+Never use bare .get() without a default value on any pipeline field.
+
+Use collections.Counter for all counting and frequency analysis.
+Never use manual dictionary increment patterns.
+
+When converting Perl to Python, do not produce a line-by-line translation.
+Produce idiomatic Python: list comprehensions, Counter, pathlib, type hints, re module.

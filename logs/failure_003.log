@@ -1,0 +1,15 @@
+[2026-08-28 04:22:58,773] {taskinstance.py:1165} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/market_data_pipeline.py", line 312, in enrich_with_figi
+    result = figi_client.do_request(batch)
+  File "/opt/airflow/plugins/figi_client.py", line 89, in do_request
+    raise FigiClientError("Max retries exceeded after 300.0s")
+src.figi_client.FigiClientError: Max retries exceeded after 300.0s
+[2026-08-28 04:22:58,774] {taskinstance.py:1166} ERROR - Stage timed out after 300 seconds
+[2026-08-28 04:22:58,775] {taskinstance.py:1167} ERROR - Expected completion: 60 seconds
+[2026-08-28 04:22:58,776] {taskinstance.py:1168} ERROR - Records processed before timeout: 0 of 1847
+[2026-08-28 04:22:58,777] {local_task_job.py:102} ERROR - Task exited with return code 1
+Affected stage: figi_enrichment
+DAG: market_data_ingest_v2
+Task: enrich_with_figi
+Run ID: scheduled__2026-08-28T04:00:00+00:00

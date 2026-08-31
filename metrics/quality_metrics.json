@@ -1,0 +1,146 @@
+{
+  "clean_run": {
+    "run_id": "RUN-2026-08-28-001",
+    "timestamp": "2026-08-28T07:00:00Z",
+    "metrics": [
+      {
+        "name": "test_pass_rate",
+        "value": 1.0,
+        "threshold": 1.0,
+        "critical_on_breach": true,
+        "description": "Fraction of pytest tests passing (1.0 = all pass)"
+      },
+      {
+        "name": "null_rate_customer_id",
+        "value": 0.0,
+        "threshold": 0.025,
+        "critical_on_breach": true,
+        "description": "Fraction of records with null customer_id"
+      },
+      {
+        "name": "null_rate_instrument_id",
+        "value": 0.0,
+        "threshold": 0.01,
+        "critical_on_breach": true,
+        "description": "Fraction of records with null instrument_id"
+      },
+      {
+        "name": "schema_conformance_rate",
+        "value": 1.0,
+        "threshold": 0.99,
+        "warn_on_breach": true,
+        "description": "Fraction of records conforming to expected schema"
+      },
+      {
+        "name": "pipeline_execution_seconds",
+        "value": 42.1,
+        "threshold": 120.0,
+        "warn_on_breach": true,
+        "description": "Total pipeline execution time in seconds"
+      },
+      {
+        "name": "figi_resolution_rate",
+        "value": 0.97,
+        "threshold": 0.90,
+        "warn_on_breach": true,
+        "description": "Fraction of instrument identifiers successfully resolved to FIGI"
+      }
+    ]
+  },
+  "soft_breach": {
+    "run_id": "RUN-2026-08-28-002",
+    "timestamp": "2026-08-28T08:30:00Z",
+    "metrics": [
+      {
+        "name": "test_pass_rate",
+        "value": 1.0,
+        "threshold": 1.0,
+        "critical_on_breach": true,
+        "description": "Fraction of pytest tests passing"
+      },
+      {
+        "name": "null_rate_customer_id",
+        "value": 0.018,
+        "threshold": 0.025,
+        "critical_on_breach": true,
+        "description": "Fraction of records with null customer_id"
+      },
+      {
+        "name": "null_rate_instrument_id",
+        "value": 0.003,
+        "threshold": 0.01,
+        "critical_on_breach": true,
+        "description": "Fraction of records with null instrument_id"
+      },
+      {
+        "name": "schema_conformance_rate",
+        "value": 0.982,
+        "threshold": 0.99,
+        "warn_on_breach": true,
+        "description": "Fraction of records conforming to expected schema"
+      },
+      {
+        "name": "pipeline_execution_seconds",
+        "value": 98.4,
+        "threshold": 120.0,
+        "warn_on_breach": true,
+        "description": "Total pipeline execution time in seconds"
+      },
+      {
+        "name": "figi_resolution_rate",
+        "value": 0.88,
+        "threshold": 0.90,
+        "warn_on_breach": true,
+        "description": "Fraction of instrument identifiers resolved to FIGI"
+      }
+    ]
+  },
+  "critical_failure": {
+    "run_id": "RUN-2026-08-28-003",
+    "timestamp": "2026-08-28T02:14:00Z",
+    "metrics": [
+      {
+        "name": "test_pass_rate",
+        "value": 0.85,
+        "threshold": 1.0,
+        "critical_on_breach": true,
+        "description": "Fraction of pytest tests passing"
+      },
+      {
+        "name": "null_rate_customer_id",
+        "value": 0.038,
+        "threshold": 0.025,
+        "critical_on_breach": true,
+        "description": "Fraction of records with null customer_id"
+      },
+      {
+        "name": "null_rate_instrument_id",
+        "value": 0.002,
+        "threshold": 0.01,
+        "critical_on_breach": true,
+        "description": "Fraction of records with null instrument_id"
+      },
+      {
+        "name": "schema_conformance_rate",
+        "value": 0.94,
+        "threshold": 0.99,
+        "warn_on_breach": true,
+        "description": "Fraction of records conforming to expected schema"
+      },
+      {
+        "name": "pipeline_execution_seconds",
+        "value": 187.3,
+        "threshold": 120.0,
+        "warn_on_breach": true,
+        "description": "Total pipeline execution time in seconds"
+      },
+      {
+        "name": "figi_resolution_rate",
+        "value": 0.71,
+        "threshold": 0.90,
+        "warn_on_breach": true,
+        "description": "Fraction of instrument identifiers resolved to FIGI"
+      }
+    ]
+  }
+}

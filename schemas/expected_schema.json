@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.2.0",
+  "registered_at": "2026-08-01T00:00:00Z",
+  "fields": [
+    {"name": "record_id",     "type": "string",  "required": true,  "description": "Unique record identifier"},
+    {"name": "instrument_id", "type": "string",  "required": true,  "description": "Instrument identifier (ticker, ISIN, CUSIP)"},
+    {"name": "id_type",       "type": "string",  "required": true,  "description": "Identifier type: TICKER, ISIN, CUSIP, SEDOL"},
+    {"name": "exchange_code", "type": "string",  "required": true,  "description": "ISO exchange code"},
+    {"name": "figi",          "type": "string",  "required": false, "description": "OpenFIGI code, UNKNOWN if unresolved"},
+    {"name": "price",         "type": "decimal", "required": true,  "description": "Last traded price, 4 decimal places"},
+    {"name": "volume",        "type": "integer", "required": true,  "description": "Trade volume in units"},
+    {"name": "timestamp",     "type": "string",  "required": true,  "description": "Trade timestamp, YYYY-MM-DD HH:MM:SS"},
+    {"name": "lookup_count",  "type": "integer", "required": false, "description": "Number of records for this exchange in the batch"},
+    {"name": "exchange_rank", "type": "integer", "required": false, "description": "Rank of this exchange by lookup frequency"}
+  ]
+}

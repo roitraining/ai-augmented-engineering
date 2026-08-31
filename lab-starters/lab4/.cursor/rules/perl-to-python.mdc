@@ -1,0 +1,33 @@
+---
+description: Perl to Python conversion standards for the DE pipeline modernisation project
+globs: ["**/*.pl", "**/*.py"]
+---
+
+# Perl to Python Conversion Standards
+
+Translate Perl regex using Python's re module.
+Convert /.../g patterns to re.finditer() or re.findall().
+Pre-compile patterns that are used inside loops: pattern = re.compile(r'...')
+
+Do not translate Perl sigils literally.
+Use collections.Counter for counting patterns.
+Use dict for hash mappings.
+Use set for membership tests.
+
+Use pathlib.Path for all file operations.
+No os.path. No raw string paths passed to open().
+
+All function arguments must have type hints.
+All return types must be declared.
+
+Replace LWP::UserAgent with the requests library.
+Replace JSON::from_json / to_json with the json standard library module.
+Replace Time::HiRes with time.time() or time.perf_counter().
+Replace Data::Dumper with pprint.
+
+Do not call exit() inside library code or module functions.
+Raise exceptions instead. Use custom exception classes where appropriate.
+
+When you see a Perl construct, ask what it is trying to accomplish.
+Then write the Python that accomplishes the same thing idiomatically.
+Do not produce a line-by-line translation.
