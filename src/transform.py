@@ -94,7 +94,7 @@ def transform_records(records: list[dict]) -> list[dict]:
         try:
             price  = float(price_raw)
             volume = int(volume_raw)
-        except (ValueError, TypeError):
+        except ValueError:
             logger.warning(
                 f"Skipping record {record_id}: non-numeric price={price_raw!r}"
                 f" or volume={volume_raw!r}"
@@ -130,6 +130,10 @@ def transform_records(records: list[dict]) -> list[dict]:
     )
     return output
 
+def append_to_daily_summary(record: dict, output_path: Path) -> None:
+    with output_path.open("a", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=list(record.keys()))
+        writer.writerow(record)
 
 def main(input_file: str) -> None:
     """Run the transform pipeline stage.
@@ -161,7 +165,6 @@ def main(input_file: str) -> None:
     writer.writeheader()
     writer.writerows(transformed)
 
-    logger.info("Transform pipeline complete")
 
 
 if __name__ == "__main__":
