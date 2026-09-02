@@ -130,7 +130,12 @@ def transform_records(records: list[dict]) -> list[dict]:
     )
     return output
 
-
+def compute_weighted_price(prices, volumes):
+    total_volume = sum(volumes)
+    if total_volume == 0:
+        return 0.0
+    return sum(p * v for p, v in zip(prices, volumes)) / total_volume
+    
 def main(input_file: str) -> None:
     """Run the transform pipeline stage.
 

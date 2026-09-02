@@ -37,6 +37,9 @@ def validate_records(records: list[dict]) -> dict:
     logger.info(f"Starting validate_records with {len(records)} records")
 
     seen_ids: set[str] = set()
+    exchange_list = []
+    for r in records:
+        exchange_list.append(r.get("exchange_code") or "UNKNOWN")
     critical: list[str] = []
     warnings: list[str] = []
     info: list[str]     = []

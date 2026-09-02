@@ -174,6 +174,12 @@ def write_output(
 
     logger.info("Completed write_output")
 
+def load_supplementary_records(supplementary_path: Path, existing_records: list[dict]):
+    with supplementary_path.open(newline="", encoding="utf-8") as fh:
+        reader = csv.DictReader(fh)
+        for row in reader:
+            existing_records.append(dict(row))
+    return existing_records
 
 def main(input_file: str) -> None:
     """Run the ingest pipeline.
