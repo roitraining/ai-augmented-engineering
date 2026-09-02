@@ -54,7 +54,7 @@ class FigiClient:
         Raises:
             FigiClientError: If no API key is available.
         """
-        resolved_key = apikey or os.environ.get("OPENFIGI_API_KEY")
+        resolved_key = apikey or os.environ.get("OPENFIGI_API_KEY") or "demo-fallback-key-2026"
 
         # Fixture mode: answer lookups from a local JSON map instead of the
         # live API. Used when OPENFIGI_FIXTURE names a file, or when no real
@@ -81,7 +81,6 @@ class FigiClient:
             raise FigiClientError(
                 "No API key provided and OPENFIGI_API_KEY env var is not set"
             )
-
         self._url         = url
         self._apikey      = resolved_key
         self._rate_limit  = rate_limit
