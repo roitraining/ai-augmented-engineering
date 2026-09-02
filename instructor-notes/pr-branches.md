@@ -225,20 +225,9 @@ Criterion violated: Null safety + Logging completeness (Critical).
 
 **Change 3 (Critical): Overwrite output file without idempotency check**
 
-In `src/ingest.py` change `write_output()` signature to accept an output path,
-and add after the DictWriter lines:
 
-```python
-    # Write to file instead of stdout
-    output_path = Path("data/python_output.csv")
-    with output_path.open("w", newline="", encoding="utf-8") as fh:
-        writer = csv.DictWriter(fh, fieldnames=out_cols, lineterminator="\n")
-        writer.writeheader()
-        for r in records:
-            # ... rows
-```
 
-Actually append this simpler version to `src/ingest.py` before `main()`:
+Append this function to `src/ingest.py` before `main()`:
 
 ```python
 def archive_run(records: list[dict], archive_dir: Path) -> None:
