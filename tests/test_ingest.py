@@ -10,6 +10,7 @@ All tests use mock fixtures. No network calls, no filesystem writes.
 import csv
 import io
 import textwrap
+import tempfile
 from collections import Counter
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -38,10 +39,14 @@ FIGI_RESPONSE = [
 
 
 @pytest.fixture
-def sample_csv_path(tmp_path: Path) -> Path:
-    p = tmp_path / "sample_input.csv"
-    p.write_text(SAMPLE_CSV, encoding="utf-8")
-    return p
+def sample_csv_path() -> Path:
+    with tempfile.NamedTemporaryFile(
+        mode="w", suffix=".csv", encoding="utf-8", delete=False
+    ) as f:
+        f.write(SAMPLE_CSV)
+        tmp = Path(f.name)
+    yield tmp
+    tmp.unlink(missing_ok=True)
 
 
 @pytest.fixture
@@ -80,15 +85,21 @@ class TestLoadRecords:
         assert records[0]["instrument_id"] == "AAPL US"
         assert records[0]["exchange_code"] == "US"
 
-    def test_file_not_found_raises(self, tmp_path: Path) -> None:
-        with pytest.raises(FileNotFoundError):
-            load_records(tmp_path / "nonexistent.csv")
+    def test_file_not_found_raises(self) -> None:
+    with pytest.raises(FileNotFoundError):
+        load_records(Path("data/this_file_does_not_exist_xyz.csv"))
 
-    def test_empty_file_raises(self, tmp_path: Path) -> None:
-        p = tmp_path / "empty.csv"
-        p.write_text("record_id,instrument_id,id_type,exchange_code,price,volume,timestamp\n")
+    def test_empty_file_raises(self) -> None:
+    with tempfile.NamedTemporaryFile(
+        mode="w", suffix=".csv", encoding="utf-8", delete=False
+    ) as f:
+        f.write("record_id,instrument_id,id_type,exchange_code,price,volume,timestamp\n")
+        p = Path(f.name)
+    try:
         with pytest.raises(ValueError, match="No records found"):
             load_records(p)
+    finally:
+        p.unlink(missing_ok=True)
 
 
 # ─── resolve_figis ────────────────────────────────────────────────────────────
