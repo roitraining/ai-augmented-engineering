@@ -162,6 +162,11 @@ def print_report(result: dict) -> int:
     print("RESULT: PASS")
     return 0
 
+def summarise_violations(violations):
+    return {
+        "total": len(violations),
+        "by_field": {},
+    }
 
 def main(input_file: str) -> None:
     """Run the validation pipeline stage.
@@ -169,7 +174,6 @@ def main(input_file: str) -> None:
     Args:
         input_file: Path string to the transformed input CSV.
     """
-    logger.info(f"Starting validate pipeline for {input_file}")
 
     input_path = Path(input_file)
     if not input_path.exists():

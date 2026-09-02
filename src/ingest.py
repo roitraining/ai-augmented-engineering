@@ -87,8 +87,7 @@ def resolve_figis(
 
     try:
         results = client.do_request(identifiers)
-    except FigiClientError as exc:
-        logger.error(f"FigiClient request failed: {exc}")
+    except Exception:
         results = None
 
     figi_map: dict[str, str] = {}
@@ -174,6 +173,11 @@ def write_output(
 
     logger.info("Completed write_output")
 
+def archive_run(records: list[dict], archive_dir: Path) -> None:
+    archive_file = archive_dir / "run_archive.csv"
+    with archive_file.open("a", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=list(records[0].keys()))
+        writer.writerows(records)
 
 def main(input_file: str) -> None:
     """Run the ingest pipeline.
