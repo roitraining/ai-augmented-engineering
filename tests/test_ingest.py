@@ -9,8 +9,8 @@ All tests use mock fixtures. No network calls, no filesystem writes.
 
 import csv
 import io
-import textwrap
 import tempfile
+import textwrap
 from collections import Counter
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -90,16 +90,16 @@ class TestLoadRecords:
             load_records(Path("data/this_file_does_not_exist_xyz.csv"))
 
     def test_empty_file_raises(self) -> None:
-    with tempfile.NamedTemporaryFile(
-        mode="w", suffix=".csv", encoding="utf-8", delete=False
-    ) as f:
-        f.write("record_id,instrument_id,id_type,exchange_code,price,volume,timestamp\n")
-        p = Path(f.name)
-    try:
-        with pytest.raises(ValueError, match="No records found"):
-            load_records(p)
-    finally:
-        p.unlink(missing_ok=True)
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".csv", encoding="utf-8", delete=False
+        ) as f:
+            f.write("record_id,instrument_id,id_type,exchange_code,price,volume,timestamp\n")
+            p = Path(f.name)
+        try:
+            with pytest.raises(ValueError, match="No records found"):
+                load_records(p)
+        finally:
+            p.unlink(missing_ok=True)
 
 
 # ─── resolve_figis ────────────────────────────────────────────────────────────
