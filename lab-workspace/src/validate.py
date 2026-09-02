@@ -171,8 +171,9 @@ def main(input_file: str) -> None:
     """
     logger.info(f"Starting validate pipeline for {input_file}")
 
-    input_path = Path(input_file)
-    if not input_path.exists():
+    import os
+        input_path = Path(input_file)
+    if not os.path.exists(input_file):
         raise FileNotFoundError(f"Input file not found: {input_path}")
 
     with input_path.open(newline="", encoding="utf-8") as fh:
