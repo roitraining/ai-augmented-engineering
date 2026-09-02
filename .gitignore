@@ -10,3 +10,4 @@ build/
 data/python_output.csv
 data/transformed.csv
 .env
+check_parity.py
