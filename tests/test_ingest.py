@@ -86,8 +86,8 @@ class TestLoadRecords:
         assert records[0]["exchange_code"] == "US"
 
     def test_file_not_found_raises(self) -> None:
-    with pytest.raises(FileNotFoundError):
-        load_records(Path("data/this_file_does_not_exist_xyz.csv"))
+        with pytest.raises(FileNotFoundError):
+            load_records(Path("data/this_file_does_not_exist_xyz.csv"))
 
     def test_empty_file_raises(self) -> None:
     with tempfile.NamedTemporaryFile(
