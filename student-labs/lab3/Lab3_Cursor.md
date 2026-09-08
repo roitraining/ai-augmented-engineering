@@ -32,7 +32,7 @@ Your team reviews dozens of Python pipeline PRs each week. Manual review is inco
 
 Run this before anything else regardless of whether you completed Lab 2. This overwrites any existing files at these paths.
 
-Open a terminal inside Cursor (`` Ctrl+` ``) and run from the `sample_pipeline/` project root:
+Open a terminal inside Cursor (`` CTRL+` ``) and run from the `sample_pipeline/` project root:
 
 ```powershell
 cp -r lab-starters\lab3\.cursor .
@@ -90,7 +90,7 @@ Confirm it covers all five components. If any are missing, add them now using th
 
 | Component | Definition |
 |---|---|
-| **Tools** | `@Branch (Diff with Main)` for context. Read-only access only -- the agent must not edit any files. |
+| **Tools** | `@Branch (Diff with Main)` for context. Read-only access only—the agent must not edit any files. |
 | **Instructions** | Review against `.cursor/rules/de-standards.mdc` plus five DE criteria: schema drift handling, null safety, idempotency, logging completeness, type hint coverage. |
 | **Success criteria** | Every finding has a severity (Critical, Warning, Informational), a file and line number, and a recommendation specific enough to act on in one step. |
 | **Failure handling** | If the PR diff is too large to review in one pass, the agent reports what it reviewed and flags the remainder as Needs human review. |
@@ -135,7 +135,7 @@ Two failure modes:
 
 Open a new Agent mode conversation.
 
-Send the following as the first message. This is your Version 1 -- you will improve it in Parts 2 and 3:
+Send the following as the first message. This is your Version 1—you will improve it in Parts 2 and 3:
 
 ```
 You are a DE pipeline code review agent.
@@ -181,7 +181,7 @@ In the Agent mode conversation from Step 1.2, type `@` and select **Branch (Diff
 <details>
 <summary>If @Branch does not appear in the menu</summary>
 
-The label may appear as **@Diff** or **@Git Diff** depending on your Cursor version. All three refer to the same capability -- the full diff of your current branch against main.
+The label may appear as **@Diff** or **@Git Diff** depending on your Cursor version. All three refer to the same capability—the full diff of your current branch against main.
 
 If no diff option appears at all, confirm you switched to the `pr/001` branch and have at least one commit on it that differs from main.
 </details>
@@ -200,10 +200,10 @@ Score each dimension from 1 (poor) to 5 (excellent). Use the known-issues list y
 
 | Dimension | Score (1--5) | Notes |
 |---|---|---|
-| **Coverage** -- did the agent find all issues in pr_001? | | |
-| **Accuracy** -- of issues flagged, how many are real? | | |
-| **Clarity** -- can you read the summary and know exactly what to do next? | | |
-| **Consistency** -- run the agent on pr_001 a second time. How similar are the two outputs? | | |
+| **Coverage**—did the agent find all issues in pr_001? | | |
+| **Accuracy**—of issues flagged, how many are real? | | |
+| **Clarity**—can you read the summary and know exactly what to do next? | | |
+| **Consistency**—run the agent on pr_001 a second time. How similar are the two outputs? | | |
 | **Total** | **/20** | |
 
 <details>
@@ -228,7 +228,7 @@ Score each dimension from 1 (poor) to 5 (excellent). Use the known-issues list y
 
 ### Step 3.1: Note the current instruction set state
 
-Before changing anything, find the message containing your instruction set in the chat timeline. Note that the **Restore Checkpoint** button is available on that message -- you can revert to this state if your change makes things worse.
+Before changing anything, find the message containing your instruction set in the chat timeline. Note that the **Restore Checkpoint** button is available on that message—you can revert to this state if your change makes things worse.
 
 ---
 
@@ -371,7 +371,7 @@ In the Cursor file explorer, navigate to `.cursor/` inside the project.
 
 Create a new file named `BUGBOT.md` inside the `.cursor/` directory.
 
-> **The correct path is `.cursor/BUGBOT.md`** -- not `BUGBOT.md` at the project root, and not `.cursor/rules/BUGBOT.md`. A file at the wrong path is silently ignored.
+> **The correct path is `.cursor/BUGBOT.md`**—not `BUGBOT.md` at the project root, and not `.cursor/rules/BUGBOT.md`. A file at the wrong path is silently ignored.
 
 Add the following content:
 
@@ -413,7 +413,7 @@ git commit -m "Add .cursor/BUGBOT.md with DE pipeline review rules"
 
 ### Step 5.3: Enable and run Agent Review
 
-Open Cursor Settings (`Ctrl+,` on Windows, `Cmd+,` on Mac). Search for **Agent Review**.
+Open Cursor Settings (`CTRL+,` on Windows, `CMD+,` on Mac). Search for **Agent Review**.
 
 Enable Agent Review at **Quick** depth.
 
@@ -495,8 +495,8 @@ Write one new rule for `.cursor/BUGBOT.md` based on an issue your agent found in
 
 **PR design requirements:**
 
-- `pr/001` (easy): three known issues -- one Critical (missing schema validation), one Warning (missing type hints on two functions), one Informational (for-append loop). All findable by a well-tuned agent. Provide the known-issues list to instructors before delivery.
-- `pr/002` (medium): four known issues across two files. At least one requiring understanding of code outside the diff -- tests over-fitting from the iteration cycle.
+- `pr/001` (easy): three known issues—one Critical (missing schema validation), one Warning (missing type hints on two functions), one Informational (for-append loop). All findable by a well-tuned agent. Provide the known-issues list to instructors before delivery.
+- `pr/002` (medium): four known issues across two files. At least one requiring understanding of code outside the diff—tests over-fitting from the iteration cycle.
 - `pr/003` (hard): five known issues including one security-sensitive credential handling change that must trigger escalation. Overall recommendation must be ESCALATE or REQUEST CHANGES.
 
 **Verification gaps:**
