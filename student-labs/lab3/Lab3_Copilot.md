@@ -26,7 +26,7 @@ This lab follows the same five-part structure and learning objectives as the Cur
 | `@Branch (Diff with Main)` | `git diff main` output pasted into Copilot Chat |
 | `.cursor/BUGBOT.md` | `.github/copilot-instructions.md` + `.github/skills/` for review rules |
 | Agent Review (local, reads BUGBOT.md) | `Copilot: Review and Comment` in VS Code |
-| Checkpoint restore for iteration rollback | Git history -- revert instruction set changes via editing the file |
+| Checkpoint restore for iteration rollback | Git history—revert instruction set changes via editing the file |
 
 The most significant difference is the diff context source. Cursor's `@Branch` attaches the full branch diff automatically. In this lab, you run `git diff main` and paste the output into Copilot Chat. The content is identical -- the workflow is slightly more manual.
 
@@ -116,7 +116,7 @@ The `.github/agents/` directory is pre-created. If you want to define a formal C
 
 ### Step 1.1: Review your scope specification
 
-Open your Chapter 3 scope specification document. This is the same document Cursor participants use -- the scoping exercise is tool-agnostic.
+Open your Chapter 3 scope specification document. This is the same document Cursor participants use—the scoping exercise is tool-agnostic.
 
 Confirm it covers all five components. If any are missing, add them now:
 
@@ -167,7 +167,7 @@ Two failure modes:
 
 Open a new Copilot Chat conversation.
 
-Send the following as the first message. This is your Version 1 -- you will improve it in Parts 2 and 3:
+Send the following as the first message. This is your Version 1—you will improve it in Parts 2 and 3:
 
 ```
 Do not edit any files.
@@ -256,10 +256,10 @@ Score each dimension from 1 (poor) to 5 (excellent). Use the known-issues list y
 
 | Dimension | Score (1--5) | Notes |
 |---|---|---|
-| **Coverage** -- did the agent find all issues in pr_001? | | |
-| **Accuracy** -- of issues flagged, how many are real? | | |
-| **Clarity** -- can you read the summary and know exactly what to do next? | | |
-| **Consistency** -- paste the same diff a second time. How similar are the two outputs? | | |
+| **Coverage**—did the agent find all issues in pr_001? | | |
+| **Accuracy**—of issues flagged, how many are real? | | |
+| **Clarity**—can you read the summary and know exactly what to do next? | | |
+| **Consistency**—paste the same diff a second time. How similar are the two outputs? | | |
 | **Total** | **/20** | |
 
 <details>
@@ -470,7 +470,7 @@ In Cursor, two systems are distinct: Bugbot (PR automation) and Agent Review (lo
 
 For this lab, you will use the local VS Code path: `Copilot: Review and Comment`. This reads your `.github/copilot-instructions.md` and your `.github/skills/pipeline-review/SKILL.md` automatically.
 
-> **Note on GitHub.com review:** If your repository is connected to GitHub and you have Copilot Enterprise assigned as a reviewer, the code review on GitHub.com will automatically invoke `.github/skills/pipeline-review/SKILL.md` without any additional configuration. This is a Copilot advantage over Cursor -- skills extend PR review natively. If your team uses GitHub, this workflow is available without the manual diff step used in this lab.
+> **Note on GitHub.com review:** If your repository is connected to GitHub and you have Copilot Enterprise assigned as a reviewer, the code review on GitHub.com will automatically invoke `.github/skills/pipeline-review/SKILL.md` without any additional configuration. This is a Copilot advantage over Cursor—skills extend PR review natively. If your team uses GitHub, this workflow is available without the manual diff step used in this lab.
 
 ---
 
@@ -530,14 +530,14 @@ git checkout pr/001
 git checkout pr/001
 ```
 
-In VS Code, open any changed file from the `pr/001` branch. Right-click in the editor and select **Copilot: Review and Comment**, or open the Command Palette (`Ctrl+Shift+P`) and search for `Copilot Review`.
+In VS Code, open any changed file from the `pr/001` branch. Right-click in the editor and select **Copilot: Review and Comment**, or open the Command Palette (`CTRL+SHIFT+P`) and search for `Copilot Review`.
 
 <details>
 <summary>If Copilot Review and Comment does not appear</summary>
 
-Confirm the GitHub Copilot Chat extension is installed and up to date (`Ctrl+Shift+X`, search for GitHub Copilot Chat, check for updates).
+Confirm the GitHub Copilot Chat extension is installed and up to date (`CTRL+SHIFT+X`, search for GitHub Copilot Chat, check for updates).
 
-Alternatively, use the Source Control tab: open the Source Control view (`Ctrl+Shift+G`), find the changed files, and look for a Copilot review option in the file context menu.
+Alternatively, use the Source Control tab: open the Source Control view (`CTRL+SHIFT+G`), find the changed files, and look for a Copilot review option in the file context menu.
 
 If neither option is available, use the manual approach: open Copilot Chat, type `#file:src/ingest.py` to attach the file, and ask Copilot to review the changes against the code review rules in `.github/copilot-instructions.md`.
 </details>
@@ -562,7 +562,7 @@ Fill in this comparison table using the Copilot Review output and your best cust
 <details>
 <summary>Typical answer pattern</summary>
 
-Copilot Review and Comment is faster and requires no diff preparation -- use it for a quick check on a specific file before committing. Your custom instruction set produces more structured output with severity ratings, confidence levels, and DE-specific criteria as a unified review -- use it when you need a complete PR-level assessment with an explicit approval or escalation recommendation.
+Copilot Review and Comment is faster and requires no diff preparation—use it for a quick check on a specific file before committing. Your custom instruction set produces more structured output with severity ratings, confidence levels, and DE-specific criteria as a unified review -- use it when you need a complete PR-level assessment with an explicit approval or escalation recommendation.
 
 **Copilot-specific advantage:** if your team uses GitHub and has Copilot Enterprise assigned as a reviewer, `.github/skills/pipeline-review/SKILL.md` automatically extends Copilot's PR review on GitHub.com. This means the structured criteria you built in Lab 1 apply to every PR your team raises, without running the custom instruction set manually.
 </details>
@@ -621,7 +621,7 @@ Write one new rule for `.github/copilot-instructions.md` (in the Code Review Rul
 
 **Copilot-specific advantage to highlight:**
 
-`.github/skills/pipeline-review/SKILL.md` automatically extends Copilot code review on GitHub.com PRs. Participants who raise a draft PR (Step 5.5) will see this in action without any additional configuration. This is worth demonstrating if time permits -- it shows that the Lab 1 skill work has real production value beyond this lab.
+`.github/skills/pipeline-review/SKILL.md` automatically extends Copilot code review on GitHub.com PRs. Participants who raise a draft PR (Step 5.5) will see this in action without any additional configuration. This is worth demonstrating if time permits—it shows that the Lab 1 skill work has real production value beyond this lab.
 
 **Starter file dependencies:**
 
