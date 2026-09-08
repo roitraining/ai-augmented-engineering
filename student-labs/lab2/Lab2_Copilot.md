@@ -23,10 +23,10 @@ This lab follows the same six-part structure and learning objectives as the Curs
 
 | Cursor feature | Copilot approach used in this lab |
 |---|---|
-| Plan mode (structural plan before code) | Explicit planning prompt in Agent mode -- template provided |
+| Plan mode (structural plan before code) | Explicit planning prompt in Agent mode—template provided |
 | Debug mode (evidence-first, six-step) | Constrained Agent mode prompts enforcing hypothesis-first discipline |
 | @Branch (Diff with Main) | `#changes` in Copilot Chat |
-| /rework-commits skill | Natural language prompt to the agent -- template provided, written by you first |
+| /rework-commits skill | Natural language prompt to the agent—template provided, written by you first |
 
 The most significant gap is Debug mode. Copilot has no named evidence-first mode. This lab teaches the constrained prompt approach as an explicit substitute, step by step, so you achieve the same discipline through prompt structure rather than mode structure.
 
@@ -37,10 +37,10 @@ The most significant gap is Debug mode. Copilot has no named evidence-first mode
 Your team has inherited three Perl pipeline modules with no in-house Perl expertise. Using the four-step conversion framework from Module 2, you will analyze the pipeline using constrained exploration prompts, generate a planning brief before writing any Python, convert the highest-priority module to idiomatic Python, validate with TDD, catch a deliberate regression using a constrained debugging workflow, and prepare the branch for peer review.
 
 **What you will produce:**
-- `docs/pipeline-map.md` -- a plain-language architectural map of the Perl pipeline
-- `docs/conversion-plan.md` -- a structured conversion plan reviewed before any code is written
-- `tests/test_ingest.py` -- a committed TDD test suite
-- `src/ingest.py` -- an idiomatic Python conversion with all tests passing
+- `docs/pipeline-map.md` —a plain-language architectural map of the Perl pipeline
+- `docs/conversion-plan.md` —a structured conversion plan reviewed before any code is written
+- `tests/test_ingest.py` —a committed TDD test suite
+- `src/ingest.py` —an idiomatic Python conversion with all tests passing
 - A parity-confirmed diff against the Perl reference output
 - A self-reviewed branch with clean commit history
 
@@ -50,7 +50,7 @@ Your team has inherited three Perl pipeline modules with no in-house Perl expert
 
 Run this before anything else regardless of whether you completed Lab 1. This overwrites any existing files at these paths.
 
-Open a terminal inside VS Code (`` Ctrl+` ``) and run from the `sample_pipeline/` project root:
+Open a terminal inside VS Code (`` CTRL+` ``) and run from the `sample_pipeline/` project root:
 
 ```powershell
 cp -r copilot-starters\lab2\.github .
@@ -96,15 +96,15 @@ The Lab 2 Copilot starter files include the completed `.github/` configuration f
 
 ### Step 1.1: Open Copilot Chat
 
-Press `Ctrl+Shift+I` (Windows) or `Cmd+Shift+I` (Mac) to open Copilot Chat.
+Press `CTRL+SHIFT+I` (Windows) or `CMD+SHIFT+I` (Mac) to open Copilot Chat.
 
-Confirm the mode shows **Agent**. This is the only mode available in Copilot -- read-only exploration is achieved through prompt constraints rather than a mode switch.
+Confirm the mode shows **Agent**. This is the only mode available in Copilot—read-only exploration is achieved through prompt constraints rather than a mode switch.
 
 ---
 
 ### Step 1.2: Map the pipeline using a read-only constraint
 
-Send the following prompt exactly. The constraint on the first line is essential -- it prevents Copilot from making changes while it explores:
+Send the following prompt exactly. The constraint on the first line is essential—it prevents Copilot from making changes while it explores:
 
 ```
 Do not edit any files. Answer only.
@@ -124,9 +124,9 @@ Read the full response before continuing.
 
 Copilot should describe all three modules without modifying any files:
 
-- `ingest.pl` -- reads raw input records, handles rate limiting, maps identifiers via the OpenFIGI API
-- `transform.pl` -- applies data transformations to the ingested records
-- `validate.pl` -- checks output data against the registered schema
+- `ingest.pl` —reads raw input records, handles rate limiting, maps identifiers via the OpenFIGI API
+- `transform.pl` —applies data transformations to the ingested records
+- `validate.pl` —checks output data against the registered schema
 
 `ingest.pl` is your conversion target for this lab. It is the most self-contained module with the clearest input/output signature.
 
@@ -325,13 +325,13 @@ This commit locks the contract. From this point forward, every Copilot instructi
 
 ## Part 4: Apply the Four-Step Conversion Framework
 
-### Step 4.1: Step 1 -- Document (already done)
+### Step 4.1: Step 1—Document (already done)
 
 Your `docs/pipeline-map.md` from Part 1 is the Step 1 output. Move directly to Step 2.
 
 ---
 
-### Step 4.2: Step 2 -- Generate stubs with a precision prompt
+### Step 4.2: Step 2—Generate stubs with a precision prompt
 
 Open a new Copilot Chat conversation. Attach the Perl file and the conversion plan:
 
@@ -395,7 +395,7 @@ If your output looks like the second example, tell Copilot to refactor for idiom
 
 ---
 
-### Step 4.3: Step 3 -- Refactor idioms
+### Step 4.3: Step 3—Refactor idioms
 
 In the same Copilot Chat conversation, send:
 
@@ -466,18 +466,18 @@ Copilot has no named Debug mode. The equivalent is an explicit constrained workf
 
 The workflow you will follow has the same six steps as Cursor's Debug mode -- you enforce them through your prompts rather than through a mode switch:
 
-1. **Hypothesize** -- ask Copilot for multiple root cause candidates before any code changes
-2. **Instrument** -- ask Copilot to add targeted logging to collect runtime evidence
-3. **Reproduce** -- run the reproduction steps to collect logs
-4. **Analyze** -- give Copilot the log output and ask for root cause analysis
-5. **Fix** -- accept the targeted fix only after you understand why it works
-6. **Verify and clean up** -- confirm the fix holds and remove all instrumentation
+1. **Hypothesize** —ask Copilot for multiple root cause candidates before any code changes
+2. **Instrument** —ask Copilot to add targeted logging to collect runtime evidence
+3. **Reproduce** —run the reproduction steps to collect logs
+4. **Analyze** —give Copilot the log output and ask for root cause analysis
+5. **Fix** —accept the targeted fix only after you understand why it works
+6. **Verify and clean up** —confirm the fix holds and remove all instrumentation
 
-Do not skip or merge steps. The value of this workflow is the evidence gathered in steps 2 and 3 -- without it, the fix is a guess.
+Do not skip or merge steps. The value of this workflow is the evidence gathered in steps 2 and 3—without it, the fix is a guess.
 
 ---
 
-### Step 5.2: Step 1 -- Generate hypotheses only
+### Step 5.2: Step 1—Generate hypotheses only
 
 Open a new Copilot Chat conversation. Send:
 
@@ -516,7 +516,7 @@ The correct root cause is hypothesis 1. Debug mode in Cursor would typically lis
 
 ---
 
-### Step 5.3: Step 2 -- Add instrumentation
+### Step 5.3: Step 2—Add instrumentation
 
 In the same conversation, send:
 
@@ -551,7 +551,7 @@ The instrumentation should capture the state of records immediately before and a
 
 ---
 
-### Step 5.4: Step 3 -- Reproduce and capture logs
+### Step 5.4: Step 3—Reproduce and capture logs
 
 Run the reproduction steps with logging enabled:
 
@@ -568,7 +568,7 @@ Open `data/debug_output.txt` and find the `# DEBUG` log lines. Copy the pre-sort
 
 ---
 
-### Step 5.5: Step 4 -- Analyze the evidence
+### Step 5.5: Step 4—Analyze the evidence
 
 In the same Copilot Chat conversation, paste the relevant log output and send:
 
@@ -595,12 +595,12 @@ Perl's idiomatic `reverse sort { $a->{count} <=> $b->{count} }` sorts ascending 
 
 Python's `sorted(records, reverse=True)` sorts descending and preserves the original order of ties (stable sort). These two behaviors produce different orderings when records have equal count values.
 
-The fix requires sorting with an explicit secondary key that matches Perl's reversal behavior on ties -- not just making Python produce the same bytes, but understanding what the Perl sort was actually doing.
+The fix requires sorting with an explicit secondary key that matches Perl's reversal behavior on ties—not just making Python produce the same bytes, but understanding what the Perl sort was actually doing.
 </details>
 
 ---
 
-### Step 5.6: Step 5 -- Accept the fix
+### Step 5.6: Step 5—Accept the fix
 
 Send:
 
@@ -615,7 +615,7 @@ Accept the fix only after you can explain it.
 
 ---
 
-### Step 5.7: Step 6 -- Verify and remove instrumentation
+### Step 5.7: Step 6—Verify and remove instrumentation
 
 Run the full verification:
 
@@ -674,7 +674,7 @@ Open a new Copilot Chat conversation. Type `#changes` to attach the current diff
 <details>
 <summary>What #changes attaches</summary>
 
-`#changes` in Copilot Chat attaches the working tree diff -- all changes that have been made since the last commit. This is equivalent to Cursor's `@Branch (Diff with Main)` for reviewing uncommitted changes.
+`#changes` in Copilot Chat attaches the working tree diff—all changes that have been made since the last commit. This is equivalent to Cursor's `@Branch (Diff with Main)` for reviewing uncommitted changes.
 
 If you want to review all changes on the branch against main (including committed changes), run `git diff main` in the terminal and paste the output into the chat.
 </details>
@@ -707,19 +707,19 @@ What context should I include in the PR description?
 
 ### Step 6.2: Clean up commit history
 
-Before running the commit cleanup, write your own version of the natural language prompt. This is the precision prompting exercise -- write the prompt first, then compare it to the reference.
+Before running the commit cleanup, write your own version of the natural language prompt. This is the precision prompting exercise—write the prompt first, then compare it to the reference.
 
 **Write your prompt here before looking at the reference:**
 
-> How would you ask an agent to reorganise your commit history into clean, logical, semantic commits without losing any changes?
+> How would you ask an agent to reorganize your commit history into clean, logical, semantic commits without losing any changes?
 
 <details>
 <summary>Reference prompt for commit history cleanup</summary>
 
-Once you have written your own version, compare it to this reference. Your version may be equally effective -- the goal is to write a specific, constrained prompt that leaves the agent no room to invent what it was not told.
+Once you have written your own version, compare it to this reference. Your version may be equally effective—the goal is to write a specific, constrained prompt that leaves the agent no room to invent what it was not told.
 
 ```
-Reorganise the commit history on this branch into clean, semantic commits.
+Reorganize the commit history on this branch into clean, semantic commits.
 
 Steps:
 1. Soft reset to main so all changes are staged but uncommitted
