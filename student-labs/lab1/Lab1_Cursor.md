@@ -23,9 +23,9 @@ Your team is about to start converting a production Perl pipeline to Python. Bef
 Every artifact you build here is used directly in Labs 2, 3, and 4. Do not skip tasks or use different file names from the ones specified.
 
 **What you will build:**
-- `.cursor/rules/de-standards.mdc` -- team DE coding standards enforced on every agent conversation
-- `.cursor/rules/perl-to-python.mdc` -- conversion-specific rules that activate on Perl and Python files
-- `.cursor/skills/pipeline-review/SKILL.md` -- an invocable code review checklist
+- `.cursor/rules/de-standards.mdc` —team DE coding standards enforced on every agent conversation
+- `.cursor/rules/perl-to-python.mdc` —conversion-specific rules that activate on Perl and Python files
+- `.cursor/skills/pipeline-review/SKILL.md` —an invocable code review checklist
 
 **What you will observe:**
 - The measurable difference in agent output before and after rules are active
@@ -113,7 +113,7 @@ What does the process_records function do?
 What would you change to make it meet professional Python standards?
 ```
 
-Read the full response. Ask mode is read-only -- no files have changed.
+Read the full response. Ask mode is read-only—no files have changed.
 
 **Write down your answer before continuing:**
 
@@ -136,11 +136,11 @@ When the agent finishes, click **Undo All** in the file change summary that appe
 <details>
 <summary>What to expect from each mode</summary>
 
-**Ask mode** should have returned a description of what `process_records` does and a list of suggested improvements -- type hints missing, no logging, os.path instead of pathlib -- without touching any file.
+**Ask mode** should have returned a description of what `process_records` does and a list of suggested improvements—type hints missing, no logging, os.path instead of pathlib -- without touching any file.
 
 **Agent mode** should have immediately started editing `src/ingest.py`, applying changes based on its judgment of what "professional Python standards" means.
 
-The key observation: Ask mode is structurally read-only. Agent mode acts. The mode discipline this course teaches -- explore with Ask, then switch to Agent when you are ready -- exists because of this difference.
+The key observation: Ask mode is structurally read-only. Agent mode acts. The mode discipline this course teaches—explore with Ask, then switch to Agent when you are ready—exists because of this difference.
 
 If Agent mode also only described changes without editing, check that you are on a Pro plan. Free tier users may not have full Agent mode access.
 </details>
@@ -228,7 +228,7 @@ Produce idiomatic Python: list comprehensions, Counter, pathlib, type hints, re 
 Save the file: `Ctrl+S` (Windows) or `Cmd+S` (Mac).
 
 <details>
-<summary>Complete de-standards.mdc reference</summary>
+<summary>Complete `de-standards.mdc` reference</summary>
 
 Your completed file should look exactly like this:
 
@@ -311,7 +311,7 @@ code .cursor\rules\perl-to-python.mdc
 code .cursor/rules/perl-to-python.mdc
 ```
 
-Read the frontmatter first. Note the `globs` field -- this file activates automatically for `*.pl` and `*.py` files, but not for every conversation. This is different from `de-standards.mdc` which uses `alwaysApply: true`.
+Read the frontmatter first. Note the `globs` field—this file activates automatically for `*.pl` and `*.py` files, but not for every conversation. This is different from `de-standards.mdc` which uses `alwaysApply: true`.
 
 Read each rule in the file body.
 
@@ -530,7 +530,7 @@ Use `/` when you want the full procedure executed. Use `@` when you want the cri
 
 ---
 
-## Part 5: Apply -- The Integrating Workflow
+## Part 5: Apply—The Integrating Workflow
 
 ### Step 5.1: Explore first in Ask mode
 
@@ -607,7 +607,7 @@ Add one new rule addressing the gap. Write it as a direct instruction to the age
 
 Save the file.
 
-> If the pipeline-review found nothing that de-standards.mdc did not already cover, your rules file is well-calibrated for this function. Note that in the debrief -- it is a valid and good outcome.
+> If the pipeline-review found nothing that de-standards.mdc did not already cover, your rules file is well-calibrated for this function. Note that in the debrief—it is a valid and good outcome.
 
 ---
 
@@ -659,4 +659,4 @@ In Step 3.2 you added a rule to `perl-to-python.mdc`. What rule did you add? Why
 
 **What this lab replaces:**
 
-The previous Lab 1 design included Custom Mode configuration as a core task. Custom Mode was removed from Cursor in version 2.1. This design replaces it with confirmed features: mode switching via dropdown and Shift+Tab, rules file authoring with the `.mdc` extension, and the `/create-skill` dynamic question flow.
+The previous Lab 1 design included Custom Mode configuration as a core task. Custom Mode was removed from Cursor in version 2.1. This design replaces it with confirmed features: mode switching via dropdown and SHIFT+TAB, rules file authoring with the `.mdc` extension, and the `/create-skill` dynamic question flow.
