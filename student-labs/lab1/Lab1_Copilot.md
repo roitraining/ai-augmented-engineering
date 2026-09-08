@@ -56,7 +56,7 @@ Every artifact you build here is used directly in Labs 2, 3, and 4. Do not skip 
 
 Run this before anything else. This overwrites any existing files at these paths. That is intentional.
 
-Open a terminal inside VS Code (`` Ctrl+` ``) and run the following from the `sample_pipeline/` project root:
+Open a terminal inside VS Code (`` CTRL+` ``) and run the following from the `sample_pipeline/` project root:
 
 ```powershell
 cp -r copilot-starters\lab1\.github .
@@ -105,7 +105,7 @@ If `.github/` does not exist or is empty, re-run the copy command from the corre
 
 ### Step 1.1: Open Copilot Chat
 
-Press `Ctrl+Shift+I` (Windows) or `Cmd+Shift+I` (Mac) to open the Copilot Chat panel.
+Press `CTRL+SHIFT+I` (Windows) or `CMD+SHIFT+I` (Mac) to open the Copilot Chat panel.
 
 Confirm the mode selector shows **Agent**. If it shows a different mode, click the selector and choose Agent.
 
