@@ -28,7 +28,7 @@ This lab follows the same five-task structure and learning objectives as the Cur
 | Four named modes (Agent, Ask, Plan, Debug) | One Agent mode with prompt-based constraints |
 | `.cursor/rules/*.mdc` with four activation modes | `.github/copilot-instructions.md` (always-on) and `.github/instructions/*.instructions.md` (path-scoped) |
 | `.cursor/skills/` invoked with `/skill-name` | `.github/skills/` invoked with `/skill-name` (identical command and file structure) |
-| Context ring showing token usage | Not available in Copilot -- context is managed implicitly |
+| Context ring showing token usage | Not available in Copilot—context is managed implicitly |
 
 The mode differences are the most significant. Copilot has one Agent mode that adapts based on the task. The read-only protection that Cursor's Ask mode provides structurally must be achieved through explicit prompt constraints in Copilot. This lab teaches both approaches so you understand the difference.
 
@@ -41,9 +41,9 @@ Your team is about to start converting a production Perl pipeline to Python. Bef
 Every artifact you build here is used directly in Labs 2, 3, and 4. Do not skip tasks or use different file names from the ones specified.
 
 **What you will build:**
-- `.github/copilot-instructions.md` -- team DE coding standards applied to every Copilot conversation
-- `.github/instructions/perl-conversion.instructions.md` -- conversion-specific instructions that activate on Perl and Python files
-- `.github/skills/pipeline-review/SKILL.md` -- an invocable code review checklist
+- `.github/copilot-instructions.md` —team DE coding standards applied to every Copilot conversation
+- `.github/instructions/perl-conversion.instructions.md` —conversion-specific instructions that activate on Perl and Python files
+- `.github/skills/pipeline-review/SKILL.md` —an invocable code review checklist
 
 **What you will observe:**
 - The measurable difference in Copilot output before and after instructions are active
@@ -311,7 +311,7 @@ code .github\instructions\perl-conversion.instructions.md
 code .github/instructions/perl-conversion.instructions.md
 ```
 
-Read the frontmatter first. Note the `applyTo:` field -- this file activates automatically when Copilot is working with `.pl` or `.py` files, but not for every conversation. This is path-scoped activation, equivalent to Cursor's `globs` field.
+Read the frontmatter first. Note the `applyTo:` field—this file activates automatically when Copilot is working with `.pl` or `.py` files, but not for every conversation. This is path-scoped activation, equivalent to Cursor's `globs` field.
 
 Read each instruction in the file body.
 
@@ -550,7 +550,7 @@ Use `/pipeline-review` when you want the full procedure executed. Use `#file:` w
 
 ---
 
-## Part 5: Apply -- The Integrating Workflow
+## Part 5: Apply—The Integrating Workflow
 
 ### Step 5.1: Explore first with a constrained prompt
 
@@ -615,7 +615,7 @@ If the diff shows changes that are not explained by your instructions file, read
 
 **Write down your answer before continuing:**
 
-> What specific changes did Copilot make? Which of the copilot-instructions.md standards are visible in the diff? What did /pipeline-review report as remaining issues?
+> What specific changes did Copilot make? Which of the `copilot-instructions.md` standards are visible in the diff? What did `/pipeline-review` report as remaining issues?
 
 ---
 
