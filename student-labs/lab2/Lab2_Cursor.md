@@ -21,10 +21,10 @@
 Your team has inherited three Perl pipeline modules with no in-house Perl expertise. Using the four-step conversion framework from Module 2, you will analyze the pipeline in Ask mode, generate a Plan mode conversion brief, convert the highest-priority module to idiomatic Python, validate with TDD, catch a deliberate regression using Debug mode, and prepare the branch for peer review.
 
 **What you will produce:**
-- `docs/pipeline-map.md` -- a plain-language architectural map of the Perl pipeline
-- `docs/conversion-plan.md` -- a Plan mode conversion brief
-- `tests/test_ingest.py` -- a committed TDD test suite
-- `src/ingest.py` -- an idiomatic Python conversion with all tests passing
+- `docs/pipeline-map.md` —a plain-language architectural map of the Perl pipeline
+- `docs/conversion-plan.md` —a Plan mode conversion brief
+- `tests/test_ingest.py` —a committed TDD test suite
+- `src/ingest.py` —an idiomatic Python conversion with all tests passing
 - A parity-confirmed diff against the Perl reference output
 - A self-reviewed branch with clean commit history
 
