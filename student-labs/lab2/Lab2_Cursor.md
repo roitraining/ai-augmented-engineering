@@ -86,7 +86,7 @@ If either directory is empty or missing, re-run the copy commands from the corre
 
 Click the mode selector in the chat input and select **Ask**. Confirm the mode indicator shows Ask before sending any message.
 
-Ask mode is read-only. Nothing you do in this part modifies any file. If you notice files changing, you are in Agent mode -- switch back before continuing.
+Ask mode is read-only. Nothing you do in this part modifies any file. If you notice files changing, you are in Agent mode—switch back before continuing.
 
 ---
 
@@ -110,9 +110,9 @@ Read the full response before continuing.
 
 Ask mode will search the codebase and return a description of each script without modifying anything. You should see a description of three modules:
 
-- `ingest.pl` -- reads raw input records, handles rate limiting, maps identifiers via the OpenFIGI API
-- `transform.pl` -- applies data transformations to the ingested records
-- `validate.pl` -- checks output data against the registered schema
+- `ingest.pl` —reads raw input records, handles rate limiting, maps identifiers via the OpenFIGI API
+- `transform.pl` —applies data transformations to the ingested records
+- `validate.pl` —checks output data against the registered schema
 
 `ingest.pl` is your conversion target for this lab. It is the most self-contained module with the clearest input/output signature and the richest set of Perl idioms to convert.
 </details>
@@ -163,7 +163,7 @@ When you send a task to Plan mode, the agent:
 3. Produces a structured, editable implementation plan
 4. Waits for you to approve the plan before writing any code
 
-The plan is a reviewable document. You can edit any step before clicking **Build**. This is the structural safeguard -- no code is written until you explicitly approve the approach.
+The plan is a reviewable document. You can edit any step before clicking **Build**. This is the structural safeguard—no code is written until you explicitly approve the approach.
 </details>
 
 ---
@@ -222,7 +222,7 @@ code docs\conversion-plan.md
 code docs/conversion-plan.md
 ```
 
-Paste the plan content and save. This becomes team documentation -- the next engineer converting a similar Perl module has a starting point.
+Paste the plan content and save. This becomes team documentation—the next engineer converting a similar Perl module has a starting point.
 
 > **If Agent mode starts writing code immediately without producing a plan:** you are in Agent mode, not Plan mode. Check the mode indicator and switch to Plan mode before retrying.
 
@@ -313,13 +313,13 @@ This commit locks the contract. From this point forward, every agent instruction
 
 ## Part 4: Apply the Four-Step Conversion Framework
 
-### Step 4.1: Step 1 -- Document (already done)
+### Step 4.1: Step 1—Document (already done)
 
 Your `docs/pipeline-map.md` from Part 1 is the Step 1 output. Move directly to Step 2.
 
 ---
 
-### Step 4.2: Step 2 -- Generate stubs with a precision prompt
+### Step 4.2: Step 2—Generate stubs with a precision prompt
 
 Open a new Agent mode conversation.
 
@@ -384,7 +384,7 @@ If your output looks like the second example, stop and ask the agent to refactor
 
 ---
 
-### Step 4.3: Step 3 -- Refactor idioms
+### Step 4.3: Step 3—Refactor idioms
 
 In the same Agent mode conversation, send:
 
@@ -458,12 +458,12 @@ Click the mode selector and choose **Debug**.
 
 Debug mode follows a six-step evidence-first workflow before proposing any fix:
 
-1. **Hypothesize** -- generates multiple root cause candidates from reading the code
-2. **Instrument** -- adds targeted log statements connected to a local debug server
-3. **Reproduce** -- gives you specific steps to trigger the failure and capture logs
-4. **Analyze** -- reads the collected runtime logs to identify the actual root cause
-5. **Fix** -- proposes a targeted fix based on confirmed evidence, not assumption
-6. **Verify and clean up** -- confirms the fix holds, removes all instrumentation
+1. **Hypothesize** —generates multiple root cause candidates from reading the code
+2. **Instrument** —adds targeted log statements connected to a local debug server
+3. **Reproduce** —gives you specific steps to trigger the failure and capture logs
+4. **Analyze** —reads the collected runtime logs to identify the actual root cause
+5. **Fix** —proposes a targeted fix based on confirmed evidence, not assumption
+6. **Verify and clean up** —confirms the fix holds, removes all instrumentation
 
 Do not modify or remove the instrumentation Debug mode adds. Do not accept a fix until you can explain why it addresses the root cause.
 </details>
@@ -609,14 +609,14 @@ When invoked, the skill instructs the agent to:
 2. Read all changes across modified files
 3. Plan a logical sequence of small, semantic commits
 4. Create each commit with a descriptive message explaining the why
-5. Verify the final diff matches your original branch exactly -- no changes lost
+5. Verify the final diff matches your original branch exactly—no changes lost
 
 The skill only restructures commits. It does not modify code.
 </details>
 
 Review the proposed commit sequence before the agent creates them. Confirm the sequence covers at minimum:
 
-- [ ] The test file commit (earliest -- predates the implementation)
+- [ ] The test file commit (earliest—predates the implementation)
 - [ ] The initial Python conversion
 - [ ] The idiom refactoring
 - [ ] The Debug mode fix
