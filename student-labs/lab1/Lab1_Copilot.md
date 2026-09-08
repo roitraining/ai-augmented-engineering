@@ -627,7 +627,7 @@ Add one new instruction addressing the gap. Write it as a direct instruction to 
 
 Save the file.
 
-> If pipeline-review found nothing that copilot-instructions.md did not already cover, your instructions file is well-calibrated for this function. Note that in the debrief -- it is a valid and good outcome.
+> If pipeline-review found nothing that copilot-instructions.md did not already cover, your instructions file is well-calibrated for this function. Note that in the debrief—it is a valid and good outcome.
 
 ---
 
@@ -668,7 +668,7 @@ In Step 3.2 you added an instruction to `perl-conversion.instructions.md`. What 
 **Coverage gaps acknowledged in this lab:**
 
 - No named Ask/Plan/Debug modes in Copilot. The prompt-constraint approach in Steps 1.2 and 5.1 is the documented substitute. Participants should leave understanding why this matters, not just that it is different.
-- No context ring. Copilot does not surface token usage. This is not taught as a missing feature in this lab -- it is simply not present and does not affect the learning objectives.
+- No context ring. Copilot does not surface token usage. This is not taught as a missing feature in this lab—it is simply not present and does not affect the learning objectives.
 - Skill invocation via `#file:` is less discoverable than Cursor's `@skill-name` autocomplete. Document skill paths in `copilot-instructions.md` for real team deployments.
 
 **Copilot-specific advantages to highlight during delivery:**
