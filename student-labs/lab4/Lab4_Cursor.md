@@ -464,7 +464,7 @@ In Part 3, did the gate agent produce the same decision on consecutive runs for 
 
 **Question 3**
 
-The audit log was the last mandatory step. In a real deployment, when should the audit log be designed -- before or after the agent is built? Why?
+The audit log was the last mandatory step. In a real deployment, when should the audit log be designed—before or after the agent is built? Why?
 
 ---
 
