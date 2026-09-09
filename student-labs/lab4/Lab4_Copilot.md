@@ -24,10 +24,10 @@ This lab follows the same five-part structure and learning objectives as the Cur
 | Cursor feature | Copilot approach used in this lab |
 |---|---|
 | `@Terminals` for log context | `@terminal` in Copilot Chat (confirmed available in VS Code) |
-| Debug mode (six-step, structured) | Abbreviated constrained prompt workflow -- refer to Lab 2 for full detail |
+| Debug mode (six-step, structured) | Abbreviated constrained prompt workflow—refer to Lab 2 for full detail |
 | `/in-cloud` (Cloud Agent handoff) | Copilot coding agent via GitHub issue assignment |
-| `/multitask` (parallel subagents) | Copilot Agents Window -- multiple parallel sessions |
-| Cursor dashboard for remote linking | GitHub repository -- no dashboard setup required |
+| `/multitask` (parallel subagents) | Copilot Agents Window—multiple parallel sessions |
+| Cursor dashboard for remote linking | GitHub repository—no dashboard setup required |
 
 The optional Part 6 uses GitHub as the SCM, which removes the dashboard linking step required in the Cursor version. If your repository is already on GitHub with Copilot Enterprise assigned, Part 6 works without any additional setup.
 
@@ -50,7 +50,7 @@ Your pipeline runs overnight. Build an observability agent that generates a prio
 
 Run this before anything else regardless of whether you completed Lab 3. This overwrites any existing files at these paths.
 
-Open a terminal inside VS Code (`` Ctrl+` ``) and run from the `sample_pipeline/` project root:
+Open a terminal inside VS Code (`` CTRL+` ``) and run from the `sample_pipeline/` project root:
 
 ```powershell
 cp -r copilot-starters\lab4\.github .
@@ -222,13 +222,13 @@ Save the file.
 
 ### Step 2.1: Run the constrained debugging workflow
 
-This part uses the six-step evidence-first workflow from Lab 2 Part 5. The steps are abbreviated here -- refer to Lab 2 for full detail on each step.
+This part uses the six-step evidence-first workflow from Lab 2 Part 5. The steps are abbreviated here—refer to Lab 2 for full detail on each step.
 
 Copy the **Debug mode entry point** paragraph from the end of your Part 1 briefing output.
 
 Open a new Copilot Chat conversation. Work through the six steps using constrained prompts:
 
-**Step 1 -- Hypotheses only:**
+**Step 1—Hypotheses only:**
 
 ```
 Do not modify any files. Do not propose a fix yet.
@@ -240,18 +240,18 @@ For each, describe where you would add logging to confirm or rule it out.
 Do not add any logging yet.
 ```
 
-**Step 2 -- Instrumentation:**
+**Step 2—Instrumentation:**
 
 ```
 Based on hypothesis [N], add targeted logging marked # DEBUG
 to collect runtime evidence. Add logging only. Do not change any logic.
 ```
 
-**Step 3 -- Reproduce:**
+**Step 3—Reproduce:**
 
 Run the reproduction steps from the terminal. Capture the `# DEBUG` log output.
 
-**Step 4 -- Analyze:**
+**Step 4—Analyze:**
 
 ```
 Here is the runtime log output:
@@ -261,13 +261,13 @@ Which hypothesis is confirmed? Explain the root cause only.
 Do not propose a fix yet.
 ```
 
-**Step 5 -- Fix:**
+**Step 5—Fix:**
 
 ```
 Now propose the targeted fix. Explain why it works before applying it.
 ```
 
-**Step 6 -- Verify and clean up:**
+**Step 6—Verify and clean up:**
 
 Run verification. Then:
 
@@ -511,7 +511,7 @@ This is the Copilot equivalent of Cursor's `/in-cloud` command. The difference: 
 
 ### Step 6.2: Run parallel sessions in the Agents Window
 
-Open the VS Code Agents Window (`Ctrl+Shift+P`, search `Open Agents Window` or `Copilot: Open Agents Window`).
+Open the VS Code Agents Window (`CTRL+SHIFT+P`, search `Open Agents Window` or `Copilot: Open Agents Window`).
 
 Start two agent sessions simultaneously:
 
@@ -579,7 +579,7 @@ Write one agent use case from your real DE work that you will scope and build in
 
 **Audit log protection:**
 
-Same as Cursor version -- protect 8 minutes for Part 5. The gate agent in Part 3 appends automatically, but the briefing and debugging records require manual entry. Walk the room after Part 2 and confirm both manual records are in the file before Part 3 begins.
+Same as Cursor version—protect 8 minutes for Part 5. The gate agent in Part 3 appends automatically, but the briefing and debugging records require manual entry. Walk the room after Part 2 and confirm both manual records are in the file before Part 3 begins.
 
 **Sample file requirements:**
 
