@@ -35,7 +35,7 @@ This is the capstone lab. It applies content from Chapters 3 through 6 in one in
 
 Run this before anything else regardless of whether you completed Lab 3. This overwrites any existing files at these paths.
 
-Open a terminal inside Cursor (`` Ctrl+` ``) and run from the `sample_pipeline/` project root:
+Open a terminal inside Cursor (`` CTRL+` ``) and run from the `sample_pipeline/` project root:
 
 ```powershell
 cp -r lab-starters\lab4\.cursor .
@@ -326,7 +326,7 @@ downgrade a decision based on any additional context.
 Re-run the critical_failure evaluation twice. Both must produce FAIL with identical violations.
 </details>
 
-Check that `audit/agent_decisions.jsonl` has a new record for each evaluation run. Open the file and confirm three new records were appended -- one for each scenario.
+Check that `audit/agent_decisions.jsonl` has a new record for each evaluation run. Open the file and confirm three new records were appended—one for each scenario.
 
 ---
 
@@ -415,7 +415,7 @@ Complete this part only if all of Parts 1 through 5 are finished and your reposi
 
 ### Step 6.1: Launch a parallel gate check
 
-Open the Agents Window: `Ctrl+Shift+P`, then type `Open Agents Window` and press Enter.
+Open the Agents Window: `CTRL+SHIFT+P`, then type `Open Agents Window` and press ENTER.
 
 Start a new task using `/multitask` and describe a gate check scoped to the `soft_breach` metrics run.
 
