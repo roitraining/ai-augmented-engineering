@@ -108,8 +108,8 @@ def resolve_figis(
 def rank_exchanges(records: list[dict]) -> tuple[Counter, dict[str, int]]:
     """Count and rank exchanges by lookup frequency.
 
-    Exchanges with equal counts are ranked by their natural sort order
-    (Python's stable sort preserves insertion order for ties).
+    Exchanges with equal counts are ranked by exchange_code ascending,
+    so the ranking is deterministic regardless of input order.
 
     Args:
         records: List of market data record dicts.
@@ -123,9 +123,8 @@ def rank_exchanges(records: list[dict]) -> tuple[Counter, dict[str, int]]:
         r.get("exchange_code") or "UNKNOWN" for r in records
     )
 
-    # Sort descending by count; Python's stable sort preserves original
-    # key order for ties (differs from Perl's reverse sort behaviour).
-    sorted_exchanges = sorted(exchange_counts, key=lambda e: exchange_counts[e], reverse=True)
+    # Sort descending by count, then by exchange_code so ties are deterministic.
+    sorted_exchanges = sorted(exchange_counts, key=lambda e: (-exchange_counts[e], e))
 
     exchange_rank = {exch: rank + 1 for rank, exch in enumerate(sorted_exchanges)}
 

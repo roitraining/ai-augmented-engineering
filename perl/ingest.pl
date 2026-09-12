@@ -98,7 +98,6 @@ for my $rec (@records) {
 }
 
 # Sort exchanges by count descending
-# Perl's reverse sort on tied values: reverses the original insertion order for ties
 my @sorted_exchanges = reverse sort { $exchange_counts{$a} <=> $exchange_counts{$b} }
                        keys %exchange_counts;
 

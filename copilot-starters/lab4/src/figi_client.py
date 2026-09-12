@@ -8,8 +8,10 @@ Retries up to 5 times on HTTP 429 responses.
 """
 
 import logging
+import json
 import os
 import time
+from pathlib import Path
 from typing import Optional
 
 import requests
@@ -53,6 +55,28 @@ class FigiClient:
             FigiClientError: If no API key is available.
         """
         resolved_key = apikey or os.environ.get("OPENFIGI_API_KEY")
+
+        # Fixture mode: answer lookups from a local JSON map instead of the
+        # live API. Used when OPENFIGI_FIXTURE names a file, or when no real
+        # key is configured and the course fixture exists. Keeps the lab
+        # runnable offline and independent of OpenFIGI endpoint changes.
+        self._fixture: Optional[dict[str, str]] = None
+        fixture_path = os.environ.get("OPENFIGI_FIXTURE")
+        if not fixture_path and (not resolved_key or resolved_key == "DEMO_KEY"):
+            candidate = Path(__file__).resolve().parent.parent / "data" / "figi_fixture.json"
+            if candidate.is_file():
+                fixture_path = str(candidate)
+        if fixture_path:
+            try:
+                with Path(fixture_path).open(encoding="utf-8") as fh:
+                    self._fixture = json.load(fh)
+            except (OSError, ValueError) as exc:
+                raise FigiClientError(
+                    f"Could not load FIGI fixture {fixture_path}: {exc}"
+                ) from exc
+            logger.info(f"FigiClient fixture mode: answering from {fixture_path}")
+            resolved_key = resolved_key or "FIXTURE"
+
         if not resolved_key:
             raise FigiClientError(
                 "No API key provided and OPENFIGI_API_KEY env var is not set"
@@ -90,6 +114,16 @@ class FigiClient:
             raise ValueError("identifiers must be a non-empty list")
 
         logger.info(f"Starting do_request with {len(identifiers)} identifiers")
+
+        if self._fixture is not None:
+            results: list[dict] = [
+                {"data": [{"figi": figi}]} if figi else {"error": "No identifier found."}
+                for figi in (
+                    self._fixture.get(str(ident.get("idValue", ""))) for ident in identifiers
+                )
+            ]
+            logger.info("Completed do_request from fixture")
+            return results
 
         self._enforce_rate_limit()
 

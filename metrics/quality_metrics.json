@@ -11,11 +11,11 @@
         "description": "Fraction of pytest tests passing (1.0 = all pass)"
       },
       {
-        "name": "null_rate_customer_id",
+        "name": "null_rate_exchange_code",
         "value": 0.0,
         "threshold": 0.025,
         "critical_on_breach": true,
-        "description": "Fraction of records with null customer_id"
+        "description": "Fraction of records with null exchange_code"
       },
       {
         "name": "null_rate_instrument_id",
@@ -59,11 +59,11 @@
         "description": "Fraction of pytest tests passing"
       },
       {
-        "name": "null_rate_customer_id",
+        "name": "null_rate_exchange_code",
         "value": 0.018,
         "threshold": 0.025,
         "critical_on_breach": true,
-        "description": "Fraction of records with null customer_id"
+        "description": "Fraction of records with null exchange_code"
       },
       {
         "name": "null_rate_instrument_id",
@@ -107,11 +107,11 @@
         "description": "Fraction of pytest tests passing"
       },
       {
-        "name": "null_rate_customer_id",
+        "name": "null_rate_exchange_code",
         "value": 0.038,
         "threshold": 0.025,
         "critical_on_breach": true,
-        "description": "Fraction of records with null customer_id"
+        "description": "Fraction of records with null exchange_code"
       },
       {
         "name": "null_rate_instrument_id",
