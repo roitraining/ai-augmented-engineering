@@ -22,6 +22,19 @@ pytest tests/ -v
 
 All tests use mock fixtures. No API keys or external connections required.
 
+## Loading a Lab
+
+Each lab starts from a known state. Instead of copying folders by hand, run the loader from the repository root:
+
+```bash
+python lab.py start 2       # reset the workspace to the start of Lab 2
+python lab.py solution 2    # load the finished state of Lab 2
+python lab.py status        # which lab state the workspace matches
+python lab.py list          # what each lab state contains
+```
+
+`start N` removes every file a lab produces and copies `lab-starters/labN/` in (add `--copilot` for `copilot-starters/`). It refuses to run while `git status` shows uncommitted changes, so commit or stash first, or pass `--force`. The finished state of Lab 4 is `lab-starters/solution/`.
+
 ## Repository Structure
 
 ```
