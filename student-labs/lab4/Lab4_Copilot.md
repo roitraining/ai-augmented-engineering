@@ -221,18 +221,26 @@ If you cannot describe the action in 20 words, the action is not specific enough
 
 **Read this before you start, because it decides what "success" looks like.**
 
-You are about to hand an agent a failure report and ask it to investigate. The most likely result
-is that it reproduces the run, finds nothing wrong, and tells you there is nothing to fix. **That is
-the expected answer and the task is not broken.** Do not go hunting for a bug.
+The failure you are about to investigate is a **transient**. It happened at 02:14 against the
+vendor's API, and by the time you sit down it has cleared: the vendor is answering again and the
+pipeline runs clean. So the most likely result is that your agent reproduces the run, finds nothing
+wrong, and tells you there is nothing to fix. **That is the expected answer and the task is not
+broken.** Do not go hunting for a bug.
 
-Here is why. Those logs came from an overnight Airflow run against the live vendor API. This
-repository answers FIGI lookups from a local fixture file whenever no API key is set, so the vendor
-call the log blames cannot fail here, and the pipeline runs clean every time.
+If you want the mechanism: this repository answers FIGI lookups from a local fixture file whenever
+no API key is set, which is what makes the overnight failure impossible to recreate here. But the
+situation it is standing in for is one you will meet for real — a timeout, a rate limit, a
+dependency that was down for nine minutes — and the shape of the morning is the same either way.
 
-Which makes this the real subject of the task: **what you do when an agent investigates and finds
-nothing.** The right move is to accept it and record it. The tempting move — and the one some
-agents will offer you — is to change the code anyway, so that something was done. Watch for that,
-and refuse it.
+That shape is the actual subject of this task. **A failure you cannot reproduce is the normal case,
+not the broken one**, and it leaves you with two jobs, neither of which is fixing code:
+
+- **Record it.** A transient that nobody writes down never happened, so when it happens again in
+  three weeks nobody knows it is the second time. This is why Task 2.4 exists, and it is the most
+  realistic thing in the lab.
+- **Refuse the fix.** Some agents, told to investigate a failure, will change something rather than
+  come back empty-handed. Changing working code to close a ticket is how a transient becomes a real
+  outage. Watch for it and undo it.
 
 ---
 
@@ -282,10 +290,9 @@ This failure came from an overnight Airflow run, and the log names things that m
 <details open>
 <summary>What you should see</summary>
 
-**"No changes needed" is a pass, not a failure of the lab.** The vendor call the log blames is
-answered from `data/figi_fixture.json` in this repository, so it cannot fail here. A clean run is
-the honest result, and an agent that reports one and stops has just done the hardest thing an agent
-does, which is decline to act.
+**"No changes needed" is a pass, not a failure of the lab.** The failure cleared before you got
+here, so a clean run is the honest result, and an agent that reports one and stops has just done the
+hardest thing an agent does: decline to act.
 
 The fourth outcome is the other common one: it runs `validate.py`, reports that the failure does not reproduce, and still writes a null-handling change (often with tests) into `src/`. The change summary lists two or three files. The "do not change any file yet" line in the prompt reduces this; it does not eliminate it. Undo it.
 
@@ -304,10 +311,11 @@ If you cannot explain why a proposed fix works, or the agent cannot show you the
    Root cause: [what went wrong and why, or "not reproducible in this repo" and what the log shows]. Fix applied: [what was changed and how it prevents recurrence, or "none" and why you rejected the proposal].
    ```
 
-   If the agent found nothing wrong, that is your root cause and it is a perfectly good record:
-   "not reproducible in this repo; the FIGI client runs from the local fixture, so the vendor call
-   the log blames cannot fail here. Fix applied: none." An audit log that only records the times
-   something was changed is not an audit log.
+   If the agent found nothing wrong, that is your root cause and it makes a perfectly good record:
+   "Root cause: transient vendor API failure at 02:14; the dependency has since recovered and the
+   stage runs clean, so the failure does not reproduce. Fix applied: none — no code change was
+   warranted." An audit log that only records the times something was changed is not an audit log,
+   and a transient nobody wrote down is a transient nobody can spot the second time.
 
 ---
 
