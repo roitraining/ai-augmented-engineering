@@ -219,6 +219,23 @@ If you cannot describe the action in 20 words, the action is not specific enough
 
 ## Task 2: Evidence-first investigation
 
+**Read this before you start, because it decides what "success" looks like.**
+
+You are about to hand an agent a failure report and ask it to investigate. The most likely result
+is that it reproduces the run, finds nothing wrong, and tells you there is nothing to fix. **That is
+the expected answer and the task is not broken.** Do not go hunting for a bug.
+
+Here is why. Those logs came from an overnight Airflow run against the live vendor API. This
+repository answers FIGI lookups from a local fixture file whenever no API key is set, so the vendor
+call the log blames cannot fail here, and the pipeline runs clean every time.
+
+Which makes this the real subject of the task: **what you do when an agent investigates and finds
+nothing.** The right move is to accept it and record it. The tempting move — and the one some
+agents will offer you — is to change the code anyway, so that something was done. Watch for that,
+and refuse it.
+
+---
+
 ### Task 2.1: Send the entry point with a reproduce-first instruction
 
 1. Stay in the briefing chat, Agent mode.
@@ -253,8 +270,11 @@ This failure came from an overnight Airflow run, and the log names things that m
    nothing is missing from the repository; the pipeline logs to the console, not to a file, so an
    agent that went looking for a log file was reasoning about its own run. Let it work.
 
-3. Identify which of three outcomes you got, and act on it:
+3. Identify which of four outcomes you got, and act on it:
 
+   - **It reproduces the run cleanly, finds nothing wrong, and reports that no changes are needed.**
+     This is the most likely outcome and it is the right answer. Nothing to keep, nothing to undo.
+     Go to Task 2.3 and write that down as your root cause.
    - It reproduces the failure and names the line that raises it. Send `Apply the smallest fix for that root cause.`, read the inline diff, then **Keep**.
    - It says the failure cannot be reproduced here and asks what to do. Send: `The DAG is not in this repo. Using the log as evidence, name the function in src/ that would raise this error and propose the smallest fix. Do not apply it.` Then read the proposal and decide as in the next line.
    - It reports that the failure cannot be reproduced and **changes the code anyway**. Do not Keep a change to code that is not failing. Click **Undo** in the change summary.
@@ -262,7 +282,12 @@ This failure came from an overnight Airflow run, and the log names things that m
 <details open>
 <summary>What you should see</summary>
 
-The third outcome is common on every agent: it runs `validate.py`, reports that the failure does not reproduce, and still writes a null-handling change (often with tests) into `src/`. The change summary lists two or three files. The "do not change any file yet" line in the prompt reduces this; it does not eliminate it.
+**"No changes needed" is a pass, not a failure of the lab.** The vendor call the log blames is
+answered from `data/figi_fixture.json` in this repository, so it cannot fail here. A clean run is
+the honest result, and an agent that reports one and stops has just done the hardest thing an agent
+does, which is decline to act.
+
+The fourth outcome is the other common one: it runs `validate.py`, reports that the failure does not reproduce, and still writes a null-handling change (often with tests) into `src/`. The change summary lists two or three files. The "do not change any file yet" line in the prompt reduces this; it does not eliminate it. Undo it.
 
 If you cannot explain why a proposed fix works, or the agent cannot show you the line that raises the error, do not accept it. A fix for a failure it could not reproduce is a guess. Sending `Explain the root cause and the fix in plain language` first is always allowed.
 </details>

@@ -232,6 +232,23 @@ If you cannot describe the action in 20 words, the action is not specific enough
 
 ## Task 2: Debug mode investigation
 
+**Read this before you start, because it decides what "success" looks like.**
+
+You are about to hand an agent a failure report and ask it to investigate. The most likely result
+is that it reproduces the run, finds nothing wrong, and tells you there is nothing to fix. **That is
+the expected answer and the task is not broken.** Do not go hunting for a bug.
+
+Here is why. Those logs came from an overnight Airflow run against the live vendor API. This
+repository answers FIGI lookups from a local fixture file whenever no API key is set, so the vendor
+call the log blames cannot fail here, and the pipeline runs clean every time.
+
+Which makes this the real subject of the task: **what you do when an agent investigates and finds
+nothing.** The right move is to accept it and record it. The tempting move — and the one some
+agents will offer you — is to change the code anyway, so that something was done. Watch for that,
+and refuse it.
+
+---
+
 ### Task 2.1: Switch the same conversation to Debug mode
 
 1. Stay in the briefing conversation. Open the mode picker (∞) at the bottom of the chat input and choose **Debug**. Switching modes in place keeps everything above it: the briefing is still in this conversation, and Debug mode can read it.
