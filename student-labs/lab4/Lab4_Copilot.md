@@ -271,29 +271,57 @@ If you cannot explain why a proposed fix works, or the agent cannot show you the
 
 ### Task 2.3: Write the root cause summary
 
-1. **Before you continue, note** a two-sentence summary. You paste this into the audit record in
-   Task 2.4, so write it on **one line** with no line break between the sentences:
+1. Write two sentences somewhere you can copy them from in a moment — a scratch file, the chat
+   input, anywhere. You are going to paste them into the audit log in Task 2.4, so write them as
+   **one line**, with a space between the sentences rather than a line break:
 
-   > Root cause: [what went wrong and why, or "not reproducible in this repo" and what the log shows]
-   > Fix applied: [what was changed and how it prevents recurrence, or "none" and why you rejected the proposal]
+   ```
+   Root cause: [what went wrong and why, or "not reproducible in this repo" and what the log shows]. Fix applied: [what was changed and how it prevents recurrence, or "none" and why you rejected the proposal].
+   ```
+
+   If the agent found nothing wrong, that is your root cause and it is a perfectly good record:
+   "not reproducible in this repo; the FIGI client runs from the local fixture, so the vendor call
+   the log blames cannot fail here. Fix applied: none." An audit log that only records the times
+   something was changed is not an audit log.
 
 ---
 
 ### Task 2.4: Add the investigation to the audit log
 
-1. Add this record on a new line at the end of `audit/agent_decisions.jsonl`, then press **Enter**
-   so the file ends with a newline. Put your Task 2.3 summary in the `decision` field, replacing
-   the placeholder.
+1. Open `audit/agent_decisions.jsonl` and look at what is in it: the record that shipped, and the
+   briefing record you added in Task 1.3. Same shape every time, one object per line.
 
-   **The whole record must sit on one line.** JSONL means one JSON object per line: a line break
-   anywhere inside the record — including in the middle of your two-sentence summary — splits it
-   into two lines, neither of which parses, and the gate agent in Task 3 reads this file. If your
-   editor soft-wraps the long line that is fine; what matters is that you did not press Enter in
-   the middle of it.
+2. Put the cursor at the end of the last line, press **Enter**, and copy the block below onto the
+   new line. The copy button takes the trailing blank line with it, so the file still ends with a
+   newline.
+
+3. Fill in the bracketed values, putting your Task 2.3 sentences into the `decision` field. Keep
+   the whole record on one line: a line break anywhere inside it — including between your two
+   sentences — splits it into two lines, neither of which parses, and the gate agent in Task 3 is
+   what reads this file next.
 
    ```json
-   {"agent": "debug_investigation", "timestamp": "[ISO 8601]", "inputs_reviewed": ["logs/[top failure log]", "src/[affected file]"], "decision": "[your two-sentence root cause summary]", "confidence": "High", "human_review_triggered": [true if you rejected the fix, otherwise false], "model_used": "[model name]"}
+   {"agent": "debug_investigation", "timestamp": "[ISO 8601]", "inputs_reviewed": ["logs/[top failure log]", "src/[affected file]"], "decision": "[your Task 2.3 sentences, on one line]", "confidence": "High", "human_review_triggered": [true if you rejected a proposed fix, otherwise false], "model_used": "[model name]"}
+
+
    ```
+
+<details open>
+<summary>Or let the agent do it</summary>
+
+You have an agent sitting right there with the whole investigation in its context. In the same
+conversation, send:
+
+```
+Open audit/agent_decisions.jsonl and look at the format of the existing records.
+Append one new record for this investigation, in exactly that format, on its own line.
+Use my summary for the decision field: [paste your two sentences].
+```
+
+That is worth doing once, because it is what Task 3 does at scale — the gate agent appends its own
+records without being walked through the format each time. Read what it wrote before you move on.
+An audit log you did not check is a log you are trusting rather than keeping.
+</details>
 
 ---
 
@@ -353,7 +381,16 @@ The agent may evaluate all three runs straight away, wait for you to name one, o
 
 ### Task 3.3: Test all three scenarios
 
-1. If the agent has not already evaluated all three runs, send each of these in turn, in the same conversation, and check the decision after each:
+**Read this before you type anything.** Given the prompt in Task 3.2, the agent almost always
+evaluates all three runs on its own, in one answer — that is the expected result and you should
+check its three decisions against the list below and go straight to step 2.
+
+The prompts in step 1 are a **fallback**, for the case where it evaluated only one run or skipped
+one. Sending them when the agent has already answered wastes several minutes and tells you nothing
+you did not have.
+
+1. **Only if a run is missing from its answer**, send the matching prompt below in the same
+   conversation, and check the decision:
 
    ```
    Evaluate the clean_run metrics.
@@ -494,11 +531,78 @@ Each line is a complete JSON object, like this:
 
 ---
 
+### Task 5.3: Turn this morning into an agent
+
+Look back at what you have just done. You investigated a failure, evaluated three CI/CD runs
+against a metrics file, extended the rules for schema drift, and recorded every decision in an
+audit log in a fixed format. Tomorrow's overnight run will need all of it again.
+
+Everything in this lab argues that a job you will repeat belongs in a file rather than in a chat.
+The gate work is still in a chat. Fix that.
+
+1. Stay in the gate agent chat, the one with the whole Task 3 and Task 4 history in it. Confirm the
+   mode pill reads **Agent**.
+
+2. Type `/`, choose **create-agent**, and after the tag send:
+
+   ```
+   Create a custom agent named cicd-gate from what we did in this chat.
+   It should read metrics/quality_metrics.json, evaluate every run in the file against the
+   thresholds, and return PASS, ESCALATE or FAIL per run with the violations that drove each
+   decision.
+   It should apply the schema drift rules we added, comparing the columns present against
+   schemas/expected_schema.json.
+   It should append one record per evaluation to audit/agent_decisions.jsonl in the format
+   already used in that file, one JSON object per line.
+   Keep the decision rules exactly as we settled them in this chat.
+   ```
+
+3. Click **Keep**. Open `.github/agents/cicd-gate.agent.md` and read what it wrote.
+
+4. Check its `tools:` line. This agent appends to the audit log, so it needs **edit** — unlike the
+   two read-only agents you built earlier. Click **Configure Tools…** and confirm **read**,
+   **search**, **execute** and **edit** are ticked. The tool list follows the job, not the habit.
+
+5. Check one more thing before you trust it: are the thresholds and the decision rules in the file,
+   or does the file assume whoever runs it already knows them? An agent built from a chat inherits
+   the chat's assumptions, and the chat is about to end.
+
+6. Commit it:
+
+   ```bash
+   git add .github/agents/cicd-gate.agent.md
+   git commit -m "Add CI/CD gate custom agent"
+   ```
+
+<details open>
+<summary>What you should see</summary>
+
+A file with the thresholds, the three decisions, the drift rules and the audit format written out —
+or one that leans on context that no longer exists, which is the more interesting result and the
+reason for step 5. Either way you now have the thing this whole lab has been arguing for: the
+morning's work as a file, versioned with the pipeline it watches, runnable by whoever is on call
+tomorrow.
+</details>
+
+---
+
 ## Task 6: Sessions view and the cloud agent (optional)
 
 Do this Task only if Tasks 1 through 5 are finished. Task 6.1 works on any clone. Task 6.2 stops at a dialog on the shared course repository, and reading that dialog is the lesson; only run it through on a fork you own.
 
 Do not hand off work to a cloud agent when the code's tests need on-premises services (an Oracle database, say). The cloud agent cannot reach them. The Lab 4 starter files run without external connectivity.
+
+**Setting this up for the first time is an administration job, and this course does not cover it.**
+Most people will read Task 6.2 rather than run it, which is fine — the dialog it stops on is the
+lesson. If you want to set it up afterwards on a repository you own, these are the pages to start
+from:
+
+- [Copilot coding agent](https://docs.github.com/en/copilot/using-github-copilot/coding-agent) — what it is and what it runs on
+- [Enabling the coding agent](https://docs.github.com/en/copilot/using-github-copilot/coding-agent/enabling-copilot-coding-agent) — the organisation and repository settings, which is the step that needs an administrator
+- [Customising the agent's environment](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-development-environment-for-copilot-coding-agent) — dependencies and setup steps for the VM
+
+Read those before you ask your platform team for anything; the request lands much better when you
+already know what is being enabled and what it can see.
 
 ### Task 6.1: See the day's agents in one place
 

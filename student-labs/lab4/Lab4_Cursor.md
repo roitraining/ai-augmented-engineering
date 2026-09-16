@@ -134,7 +134,13 @@ Only the **lab4** line matters: `25/25 files identical` and `<- matches`. `git: 
 
 In Lab 3 you built a reviewer as a subagent instead of a prompt, so it survived the conversation that made it. Do the same here: the morning briefing is the most repeated job on this list, and it is read-only, which makes it the easiest agent you will ever scope.
 
-1. Click **+** for a new conversation (Agent mode).
+1. Click **+** for a new conversation, then **check the mode before you type anything**. Open the
+   mode picker (∞) at the bottom of the chat input and confirm it reads **Agent**.
+
+   A new conversation does not always open in Agent mode — it can inherit the mode from the last
+   conversation in that window, so a window you last used in Ask mode opens in Ask mode. Ask mode
+   cannot write files, so `/create-subagent` will discuss your agent at length and create nothing.
+   If the run produces no file, this is why.
 
 2. Type `/`, choose **create-subagent**, and after the tag paste the following, starting with the line `Create a subagent named incident-briefing.`:
 
@@ -201,15 +207,26 @@ If you cannot describe the action in 20 words, the action is not specific enough
 
 ### Task 1.3: Add the briefing decision to the audit log
 
-1. In the `audit/agent_decisions.jsonl` tab, add this record on a new line at the end of the file, filling in the bracketed values from your session:
+1. Open the `audit/agent_decisions.jsonl` tab and read the record already in it. One JSON object,
+   one line, no line breaks inside it. That is the whole format: JSONL is "one JSON object per
+   line", which is what makes a log you can append to forever and still parse a line at a time.
+
+2. Put the cursor at the very end of the last line and press **Enter** to open a new line.
+
+3. Copy the block below onto it, and fill in the bracketed values from your session. The copy
+   button takes the trailing blank line with it, so the file will end with a newline — which the
+   gate agent in Task 3 needs, or its first record is glued onto the end of yours.
 
    ```json
    {"agent": "morning_briefing", "timestamp": "[ISO 8601]", "inputs_reviewed": ["logs/failure_001.log", "logs/failure_002.log", "logs/failure_003.log", "logs/failure_004.log"], "decision": "Briefing generated: [X] Critical, [Y] Warning, [Z] Informational", "confidence": "High", "human_review_triggered": false, "model_used": "[model name from the model picker, e.g. Cursor Grok 4.6 High Fast]"}
+
+
    ```
 
-   The whole record is one line.
-
-2. Press **Enter** after it so the file ends with a newline. The gate agent in Task 3 appends to the end of the file; without that newline its first record is glued onto yours. Auto Save saves the file.
+4. Check the result: your record is on one line, and there is an empty line under it. If your
+   editor wrapped the long line across the screen that is fine — wrapping is display, not content.
+   What matters is that you never pressed Enter in the middle of the record. Auto Save handles the
+   rest.
 
 ---
 
@@ -250,13 +267,18 @@ Debug mode reads the report and tries to reproduce the failure (it may ask you h
      **Proceed** button appears. Click it. Cursor asks first because *Auto-Approve Mode
      Transitions* is off by default; if you ignore it, it goes ahead on its own after fifteen
      seconds.
-   - It may narrate its way around something missing — "the debug log file is missing, so I'll
-     confirm the instrumentation is still in place" is a real example. Nothing is broken and
-     nothing is missing from the repository; the pipeline logs to the console, not to a file,
-     so an agent that went looking for a log file was reasoning about its own run. Let it work.
+   - It may say something like "the debug log file is missing, so I'll confirm the instrumentation
+     is still in place". Nothing is wrong. Debug mode instruments the code, runs it, writes what it
+     learns to `.cursor/debug-<id>.log`, and reads that file back; early in the run the file does
+     not exist yet. Open it afterwards if you are curious — it is a numbered list of the hypotheses
+     it tested and what each one showed, which is the most honest view of an agent's reasoning you
+     will get all day. It is in `.gitignore`, so it will not follow you into a commit.
 
-3. Identify which of three outcomes you got, and act on it:
+3. Identify which of four outcomes you got, and act on it:
 
+   - **It reproduces the run cleanly, finds nothing wrong, and reports that no changes are needed.**
+     This is common and it is the *right* answer — the box below says why. Nothing to keep, nothing
+     to undo. Go to Task 2.3 and write that down as your root cause.
    - It reproduces the failure and fixes the line that raised it. Read the explanation, click **Mark as Fixed**, then **Keep**.
    - It says the failure cannot be reproduced here and asks what to do. Send: `The DAG is not in this repo. Using the log as evidence, name the function in src/ that would raise this error and propose the smallest fix.` Then read the proposal and decide as in the next line.
    - It proves the failure cannot be reproduced and **proposes a fix anyway**. Do not Keep a change to code that is not failing. Click **Undo** in the change summary, then **Confirm**.
@@ -264,7 +286,17 @@ Debug mode reads the report and tries to reproduce the failure (it may ask you h
 <details open>
 <summary>What you should see</summary>
 
-On the current build, the third outcome is the most common: Debug mode runs `validate.py`, reports that the failure does not reproduce, and still writes a null-handling change (with tests) into `src/`. The change summary lists two or three files.
+**"No changes needed" is a pass, not a failure of the lab.** These logs came from an overnight
+Airflow run against the live vendor API. This repository answers FIGI lookups from
+`data/figi_fixture.json` whenever no API key is set, so the vendor call the log blames cannot fail
+here — a clean run is the honest result, and an agent that reports one and stops has just done the
+hardest thing an agent does, which is decline to act. If you want to see it prove that, open
+`.cursor/debug-<id>.log`: the entries record `using_fixture: true` and the run completing without
+an exception.
+
+The other common outcome is the fourth: Debug mode runs `validate.py`, reports that the failure does
+not reproduce, and still writes a null-handling change (often with tests) into `src/`. The change
+summary lists two or three files. Undo it.
 
 If you cannot explain why a proposed fix works, or the agent cannot show you the line that raises the error, do not accept it. A fix for a failure it could not reproduce is a guess. Sending `Explain the root cause and the fix in plain language` first is always allowed.
 </details>
@@ -273,29 +305,57 @@ If you cannot explain why a proposed fix works, or the agent cannot show you the
 
 ### Task 2.3: Write the root cause summary
 
-1. **Before you continue, note** a two-sentence summary. You paste this into the audit record in
-   Task 2.4, so write it on **one line** with no line break between the sentences:
+1. Write two sentences somewhere you can copy them from in a moment — a scratch file, the chat
+   input, anywhere. You are going to paste them into the audit log in Task 2.4, so write them as
+   **one line**, with a space between the sentences rather than a line break:
 
-   > Root cause: [what went wrong and why, or "not reproducible in this repo" and what the log shows]
-   > Fix applied: [what was changed and how it prevents recurrence, or "none" and why you rejected the proposal]
+   ```
+   Root cause: [what went wrong and why, or "not reproducible in this repo" and what the log shows]. Fix applied: [what was changed and how it prevents recurrence, or "none" and why you rejected the proposal].
+   ```
+
+   If the agent found nothing wrong, that is your root cause and it is a perfectly good record:
+   "not reproducible in this repo; the FIGI client runs from the local fixture, so the vendor call
+   the log blames cannot fail here. Fix applied: none." An audit log that only records the times
+   something was changed is not an audit log.
 
 ---
 
 ### Task 2.4: Add the Debug investigation to the audit log
 
-1. Add this record on a new line at the end of `audit/agent_decisions.jsonl`, then press **Enter**
-   so the file ends with a newline. Put your Task 2.3 summary in the `decision` field, replacing
-   the placeholder.
+1. Open `audit/agent_decisions.jsonl` and look at what is in it: the record that shipped, and the
+   briefing record you added in Task 1.3. Same shape every time, one object per line.
 
-   **The whole record must sit on one line.** JSONL means one JSON object per line: a line break
-   anywhere inside the record — including in the middle of your two-sentence summary — splits it
-   into two lines, neither of which parses, and the gate agent in Task 3 reads this file. If your
-   editor soft-wraps the long line that is fine; what matters is that you did not press Enter in
-   the middle of it.
+2. Put the cursor at the end of the last line, press **Enter**, and copy the block below onto the
+   new line. The copy button takes the trailing blank line with it, so the file still ends with a
+   newline.
+
+3. Fill in the bracketed values, putting your Task 2.3 sentences into the `decision` field. Keep
+   the whole record on one line: a line break anywhere inside it — including between your two
+   sentences — splits it into two lines, neither of which parses, and the gate agent in Task 3 is
+   what reads this file next.
 
    ```json
-   {"agent": "debug_mode_investigation", "timestamp": "[ISO 8601]", "inputs_reviewed": ["logs/[top failure log]", "src/[affected file]"], "decision": "[your two-sentence root cause summary]", "confidence": "High", "human_review_triggered": [true if you rejected the fix, otherwise false], "model_used": "[model name]"}
+   {"agent": "debug_mode_investigation", "timestamp": "[ISO 8601]", "inputs_reviewed": ["logs/[top failure log]", "src/[affected file]"], "decision": "[your Task 2.3 sentences, on one line]", "confidence": "High", "human_review_triggered": [true if you rejected a proposed fix, otherwise false], "model_used": "[model name]"}
+
+
    ```
+
+<details open>
+<summary>Or let the agent do it</summary>
+
+You have an agent sitting right there with the whole investigation in its context. In the same
+conversation, send:
+
+```
+Open audit/agent_decisions.jsonl and look at the format of the existing records.
+Append one new record for this investigation, in exactly that format, on its own line.
+Use my summary for the decision field: [paste your two sentences].
+```
+
+That is worth doing once, because it is what Task 3 does at scale — the gate agent appends its own
+records without being walked through the format each time. Read what it wrote before you move on.
+An audit log you did not check is a log you are trusting rather than keeping.
+</details>
 
 ---
 
@@ -355,7 +415,16 @@ The agent may evaluate all three runs straight away, wait for you to name one, o
 
 ### Task 3.3: Test all three scenarios
 
-1. If the agent has not already evaluated all three runs, send each of these in turn, in the same conversation, and check the decision after each:
+**Read this before you type anything.** Given the prompt in Task 3.2, the agent almost always
+evaluates all three runs on its own, in one answer — that is the expected result and you should
+check its three decisions against the list below and go straight to step 2.
+
+The prompts in step 1 are a **fallback**, for the case where it evaluated only one run or skipped
+one. Sending them when the agent has already answered wastes several minutes and tells you nothing
+you did not have.
+
+1. **Only if a run is missing from its answer**, send the matching prompt below in the same
+   conversation, and check the decision:
 
    ```
    Evaluate the clean_run metrics.
@@ -496,11 +565,78 @@ Each line is a complete JSON object, like this:
 
 ---
 
+### Task 5.3: Turn this morning into an agent
+
+Look back at what you have just done. You investigated a failure, evaluated three CI/CD runs
+against a metrics file, extended the rules for schema drift, and recorded every decision in an
+audit log in a fixed format. Tomorrow's overnight run will need all of it again.
+
+Everything in this lab argues that a job you will repeat belongs in a file rather than in a
+conversation. The gate work is still in a conversation. Fix that.
+
+1. Stay in the gate agent conversation, the one that has the whole Task 3 and Task 4 history in it.
+   Confirm the mode picker reads **Agent**.
+
+2. Type `/`, choose **create-subagent**, and after the tag send:
+
+   ```
+   Create a subagent named cicd-gate from what we did in this conversation.
+   It should read metrics/quality_metrics.json, evaluate every run in the file against the
+   thresholds, and return PASS, ESCALATE or FAIL per run with the violations that drove each
+   decision.
+   It should apply the schema drift rules we added, comparing the columns present against
+   schemas/expected_schema.json.
+   It should append one record per evaluation to audit/agent_decisions.jsonl in the format
+   already used in that file, one JSON object per line.
+   Keep the decision rules exactly as we settled them in this conversation.
+   ```
+
+3. Click **Keep**. Open `.cursor/agents/cicd-gate.md` and read what it wrote.
+
+4. Check one thing before you trust it: are the thresholds and the decision rules in the file, or
+   does the file assume whoever runs it already knows them? An agent built from a conversation
+   inherits the conversation's assumptions, and the conversation is about to end.
+
+5. Commit it:
+
+   ```bash
+   git add .cursor/agents/cicd-gate.md
+   git commit -m "Add CI/CD gate subagent"
+   ```
+
+<details open>
+<summary>What you should see</summary>
+
+A file with the thresholds, the three decisions, the drift rules and the audit format written out —
+or one that leans on context that no longer exists, which is the more interesting result and the
+reason for step 4. Either way you now have the thing this whole lab has been arguing for: the
+morning's work as a file, versioned with the pipeline it watches, runnable by whoever is on call
+tomorrow.
+
+This agent cannot be Read-only, because appending to the audit log is a write. That is worth
+noticing after three agents where Read-only was the right answer: the toggle follows the job, not
+the habit.
+</details>
+
+---
+
 ## Task 6: Cloud Agents Window (optional)
 
 Do this Task only if Tasks 1 through 5 are finished. Tasks 6.1 and 6.2 work on any clone. Task 6.3 needs a repository you administer, linked in the Cursor dashboard at `cursor.com/dashboard` with the Cursor GitHub app installed; on the shared course repository, expect it to stop at the message quoted in its box, which is itself the lesson.
 
 Do not attempt Cloud Agent tasks on code whose tests need on-premises services (an Oracle database, say). Cloud Agent VMs cannot reach them. The Lab 4 starter files run without external connectivity.
+
+**Setting this up for the first time is an administration job, and this course does not cover it.**
+Most people will read Task 6.3 rather than run it, which is fine — the message it stops on is the
+lesson. If you want to set it up properly afterwards, on a repository you administer, these are the
+pages to start from:
+
+- [Cloud Agents overview](https://cursor.com/docs/cloud-agent) — what a cloud agent is and what it runs on
+- [Cloud environment setup](https://cursor.com/docs/cloud-agent/setup) — the machine, the snapshot and the install commands
+- [GitHub integration](https://cursor.com/docs/integrations/github) — linking the repository and installing the Cursor GitHub app, which is the step that needs an organisation administrator
+
+Read those before you ask your platform team for anything; the request lands much better when you
+already know which app is being installed and what it can see.
 
 ### Task 6.1: Launch a parallel gate check
 

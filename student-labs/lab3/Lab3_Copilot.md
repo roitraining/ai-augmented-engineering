@@ -331,7 +331,9 @@ Your wording will differ from this example and from your neighbour's, because th
 
 ### Task 1.4: Run it on PR 001
 
-1. Click **+** (New Chat). Confirm you are still on `pr/001` (`git branch --show-current`).
+1. Click **+** (New Chat), then **check the mode before you type anything**: the mode pill under
+   the chat input must read **Agent**. A new chat can inherit the mode from the last one, and Ask
+   mode cannot write files — `/create-agent` would describe the agent and create nothing. Confirm you are still on `pr/001` (`git branch --show-current`).
 
 2. Click the mode pill and choose **de-pipeline-reviewer** from the list, then send:
 

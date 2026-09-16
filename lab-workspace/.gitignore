@@ -11,3 +11,6 @@ data/python_output.csv
 data/transformed.csv
 .env
 check_parity.py
+
+# Cursor Debug mode writes an instrumentation log here and does not clean it up
+.cursor/debug-*.log

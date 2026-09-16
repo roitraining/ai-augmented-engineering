@@ -211,7 +211,12 @@ Two failure modes:
 
 A subagent is a Markdown file under `.cursor/agents/`. It has a name, a description, its own instructions, and its own permissions, and every conversation in this project can call it. You do not have to write the file by hand: `/create-subagent` writes it from a description, the same way `/create-skill` wrote your skill in Lab 1.
 
-1. Click **+** for a new conversation (Agent mode).
+1. Click **+** for a new conversation, then **check the mode before you type anything**. Open the
+   mode picker (∞) at the bottom of the chat input and confirm it reads **Agent**.
+
+   A new conversation can inherit the mode from the last one in that window, so a window you last
+   used in Ask mode opens in Ask mode — and Ask mode cannot write files. `/create-subagent` would
+   describe the agent it *would* build and create nothing.
 
 2. Type `/` and choose **create-subagent** from the list. It becomes a highlighted tag. A pasted `/create-subagent` is just text and does nothing; type the slash.
 
